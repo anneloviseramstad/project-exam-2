@@ -45,6 +45,18 @@ It connects to the official Holidaze API to manage venues, bookings, and user pr
 
 ---
 
+## Links
+
+Figma Design
+https://www.figma.com/design/CIZptA50V5ffryqXbxGIEW/Holidaze?node-id=4-446&t=Anp89nZOZ60OjxLh-1
+
+Project Kanban Board
+https://github.com/users/anneloviseramstad/projects/5
+
+Project Roadmap
+https://github.com/users/anneloviseramstad/projects/5/views/2
+
+
 ## Installation
 
 ### 1. Clone the repository
