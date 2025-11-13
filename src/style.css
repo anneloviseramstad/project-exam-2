@@ -1,1 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
+
+body {
+  background: #faf9fb;
+  color: #1f1f1f;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.loader {
+  border-top-color: #252016;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@theme {
+  --font-heading: "Raleway", sans-serif;
+  --font-base: "Lato", sans-serif;
+
+  --color-primary: #252016;
+  --color-secondary: #eeeeee;
+  --color-primary-hover: #5c5445;
+  --color-primary-light: #ffffff;
+
+  --color-text-primary: #1f1f1f;
+  --color-text-secondary: #676767;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl font-heading font-medium;
+  }
+  h2 {
+    @apply text-lg font-heading;
+  }
+  p {
+    @apply font-base text-base;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-2 md:px-4 lg:px-8 py-8 sm:py-12 lg:py-16;
+  }
+  .navbar {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .card {
+    @apply transition-transform duration-300 overflow-hidden rounded-lg transform;
+  }
+  .card:hover {
+    @apply scale-105 cursor-pointer;
+  }
+  .card-img {
+    @apply w-full h-[200px] object-cover rounded-lg;
+  }
+  .logo {
+    @apply text-2xl font-heading;
+  }
+  .btn {
+    @apply bg-primary text-white font-semibold font-heading py-3 rounded-lg cursor-pointer text-center;
+  }
+  .button:hover {
+    @apply cursor-pointer;
+  }
+}

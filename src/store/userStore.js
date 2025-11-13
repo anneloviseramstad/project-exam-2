@@ -1,25 +1,55 @@
 import { defineStore } from "pinia";
+import { authService } from "../api/authService";
+import { venueService } from "../api/venueService";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    isLoggedIn: false,
-    role: null,
-    userInfo: null,
+    user: null,
+    token: null,
   }),
   actions: {
-    login(user) {
-      this.isLoggedIn = true;
-      this.role = user.role;
-      this.userInfo = user;
+    async register(userData) {
+      const data = await authService.register(userData);
+      this.user = data;
+      if (data.accessToken) {
+        this.token = data.accessToken;
+        localStorage.setItem("token", data.accessToken);
+      }
     },
-    logout() {
-      this.isLoggedIn = false;
-      this.role = null;
-      this.userInfo = null;
+    async login(credentials) {
+      const data = await authService.login(credentials);
+      this.user = data;
+      if (data.accessToken) {
+        this.token = data.accessToken;
+        localStorage.setItem("token", data.accessToken);
+      }
     },
-    updateAvatar(avatarUrl) {
-      if (this.userInfo) {
-        this.userInfo.avatar = avatarUrl;
+    async logout() {
+      this.user = null;
+      this.token = null;
+      localStorage.removeItem("token");
+    },
+  },
+});
+
+export const useVenuesStore = defineStore("venues", {
+  state: () => ({
+    venues: [],
+    loading: false,
+    error: "",
+  }),
+  actions: {
+    async fetchVenues() {
+      this.loading = true;
+      this.error = "";
+      try {
+        const data = await venueService.getAllVenues();
+        this.venues = data;
+      } catch (err) {
+        console.error(err);
+        this.error = "Kunne ikke hente venues";
+      } finally {
+        this.loading = false;
       }
     },
   },
