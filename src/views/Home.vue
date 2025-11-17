@@ -2,6 +2,7 @@
 import Navbar from "../components/layout/Navbar.vue";
 import VenueList from "../components/venue/VenueList.vue";
 import Filterbar from "../components/layout/Filterbar.vue";
+import Footer from "../components/layout/Footer.vue";
 </script>
 
 <template>
@@ -19,7 +20,9 @@ import Filterbar from "../components/layout/Filterbar.vue";
     </div>
     <div class="py-4 md:py-12">
       <Filterbar />
+      <h3>Book Your Next Stay</h3>
       <VenueList />
     </div>
   </div>
+  <Footer />
 </template>

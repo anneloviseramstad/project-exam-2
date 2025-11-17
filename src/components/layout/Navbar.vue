@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { computed } from "vue";
 
 const menuOpen = ref(false);
 
@@ -19,8 +20,9 @@ function closeMenu() {
       </a>
 
       <ul class="hidden md:flex gap-6">
-        <li><a href="/register" @click="closeMenu">Sign up</a></li>
-        <li><a href="/login" @click="closeMenu">Log in</a></li>
+        <li>All Venues</li>
+        <li>Register</li>
+        <li>Log in</li>
       </ul>
       <button
         @click="menuOpen = !menuOpen"

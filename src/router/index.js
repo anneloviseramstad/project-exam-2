@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { uiStore } from "../store/ui.js";
-import { useUserStore } from "../store/userStore.js";
+
 import Home from "../views/Home.vue";
 import VenuesList from "../views/VenuesList.vue";
 import VenuePage from "../views/VenuePage.vue";
-import Login from "../views/Login.vue";
-import Register from "../views/Register.vue";
 import Profile from "../views/Profile.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
 
@@ -13,8 +11,7 @@ const routes = [
   { path: "/", name: "Home", component: Home },
   { path: "/venues", name: "VenuesList", component: VenuesList },
   { path: "/venues/:id", name: "VenuePage", component: VenuePage, props: true },
-  { path: "/login", name: "Login", component: Login },
-  { path: "/register", name: "Register", component: Register },
+  { path: "/login", name: "AuthView" },
   {
     path: "/profile",
     name: "Profile",
@@ -37,7 +34,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
   uiStore.setLoading(true);
   uiStore.clearError();
 

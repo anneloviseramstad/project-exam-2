@@ -8,10 +8,32 @@ export const uiStore = reactive({
     this.loading = value;
   },
 
-  setError(message) {
-    this.error = message;
+  setError(err) {
+    this.error = this.parseApiError(err);
   },
+
   clearError() {
     this.error = null;
+  },
+
+  parseApiError(err) {
+    if (!err?.response?.data) return "Something went wrong.";
+
+    const apiErrors = err.response.data.errors;
+    if (Array.isArray(apiErrors)) {
+      return apiErrors
+        .map((e) => {
+          if (e.message.includes("stud.noroff.no"))
+            return "Only stud.noroff.no emails are allowed";
+          if (e.message.includes("Password must be at least"))
+            return "Password must be at least 8 characters";
+          if (e.message.includes("Email must be a valid email"))
+            return "Please enter a valid email";
+          return e.message;
+        })
+        .join("\n");
+    }
+
+    return err.response.data.message || err.message || "Something went wrong.";
   },
 });
