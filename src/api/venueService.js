@@ -4,7 +4,7 @@ export const venueService = {
   getAllVenues() {
     return api.get("/holidaze/venues").then((res) => res.data.data);
   },
-  getVenuesById(id) {
+  getVenueById(id) {
     return api.get(`/holidaze/venues/${id}`).then((res) => res.data.data);
   },
   search(query) {

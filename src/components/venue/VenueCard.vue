@@ -1,11 +1,19 @@
 <script setup>
-defineProps({
+import { useRouter } from "vue-router";
+
+const props = defineProps({
   venue: Object,
 });
+
+const router = useRouter();
+
+function goToVenue() {
+  router.push(`/venues/${props.venue.id}`);
+}
 </script>
 
 <template v-if="venue">
-  <div class="card">
+  <div class="card" @click="goToVenue">
     <img
       :src="venue.media?.[0]?.url || '/placeholder.jpg'"
       :alt="venue.name"

@@ -1,14 +1,9 @@
 <script setup>
-import Navbar from "../components/layout/Navbar.vue";
 import VenueList from "../components/venue/VenueList.vue";
 import Filterbar from "../components/layout/Filterbar.vue";
-import Footer from "../components/layout/Footer.vue";
 </script>
 
 <template>
-  <header>
-    <Navbar />
-  </header>
   <div class="container">
     <div class="text-center flex flex-col gap-4">
       <h1>The Easiest Way To Book Your Stay</h1>
@@ -24,5 +19,4 @@ import Footer from "../components/layout/Footer.vue";
       <VenueList />
     </div>
   </div>
-  <Footer />
 </template>

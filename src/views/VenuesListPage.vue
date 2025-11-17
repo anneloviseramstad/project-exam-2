@@ -1,12 +1,9 @@
 <script setup>
-import Navbar from "../components/layout/Navbar.vue";
 import VenueList from "../components/venue/VenueList.vue";
 import Filterbar from "../components/layout/Filterbar.vue";
-import Footer from "../components/layout/Footer.vue";
 </script>
 
 <template>
-  <Navbar />
   <div class="container">
     <h1>Choose from a variety of amazing venues below</h1>
     <h2>
@@ -17,5 +14,4 @@ import Footer from "../components/layout/Footer.vue";
     <Filterbar />
     <VenueList />
   </div>
-  <Footer />
 </template>
