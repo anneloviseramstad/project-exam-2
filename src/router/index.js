@@ -11,7 +11,6 @@ const routes = [
   { path: "/", name: "Home", component: Home },
   { path: "/venues", name: "VenuesList", component: VenuesList },
   { path: "/venues/:id", name: "VenuePage", component: VenuePage, props: true },
-  { path: "/login", name: "AuthView" },
   {
     path: "/profile",
     name: "Profile",
@@ -41,7 +40,7 @@ router.beforeEach((to, from, next) => {
   const requiredRole = to.meta.requiresRole;
 
   try {
-    if (requiresAuth && !userStore.isLoggedIn) {
+    if (requiresAuth && !uiStore.isLoggedIn) {
       uiStore.setError("You have to be logged in to visit this site.");
       return next({ name: "Login" });
     }
