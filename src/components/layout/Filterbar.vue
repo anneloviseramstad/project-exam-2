@@ -57,7 +57,7 @@ async function searchVenues() {
 </script>
 
 <template>
-  <div class="mx-auto py-8">
+  <div class="mx-auto py-4">
     <div
       class="grid grid-cols-1 md:grid-cols-5 gap-4 bg-white p-4 rounded-lg shadow"
     >
