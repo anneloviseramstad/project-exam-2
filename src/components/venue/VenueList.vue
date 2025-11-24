@@ -11,7 +11,10 @@ const fetchVenues = async () => {
   uiStore.setLoading(true);
 
   try {
-    venues.value = await handleApiCall(() => venueService.getAllVenues());
+    const data = await handleApiCall(() => venueService.getAllVenues());
+    venues.value = data.sort(
+      (a, b) => new Date(b.created) - new Date(a.created)
+    );
   } catch (err) {
     uiStore.setError("Failed to fetch venues.");
   } finally {

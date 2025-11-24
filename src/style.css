@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libre+Caslon+Display&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
 
@@ -28,10 +28,12 @@ body {
 }
 
 @theme {
+  --font-subheading: "Libre Caslon Display", sans-serif;
   --font-heading: "Raleway", sans-serif;
   --font-base: "Lato", sans-serif;
 
-  --color-primary: #252016;
+  --color-primary: #b98801;
+  --color-dark: #1f1f1f;
   --color-secondary: #eeeeee;
   --color-primary-hover: #5c5445;
   --color-primary-light: #ffffff;
@@ -51,13 +53,16 @@ body {
     @apply text-lg font-heading font-medium;
   }
   p {
-    @apply font-base text-base;
+    @apply font-base text-lg;
   }
 }
 
 @layer components {
+  .nav {
+    @apply max-w-7xl mx-auto px-2 md:px-4 lg:px-8;
+  }
   .container {
-    @apply max-w-7xl mx-auto px-2 md:px-4 lg:px-8 py-8 sm:py-12 lg:py-16;
+    @apply max-w-7xl mx-auto px-2 py-8 sm:py-12;
   }
   .navbar {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -72,10 +77,10 @@ body {
     @apply w-full h-[200px] object-cover rounded-lg;
   }
   .logo {
-    @apply text-2xl font-heading;
+    @apply text-xl font-medium font-heading;
   }
   .btn {
-    @apply bg-primary text-white font-semibold font-heading py-3 rounded-lg cursor-pointer text-center;
+    @apply bg-primary text-white font-semibold font-heading py-2 px-4 cursor-pointer text-center;
   }
   .button:hover {
     @apply cursor-pointer;

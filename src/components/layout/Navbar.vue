@@ -1,33 +1,51 @@
 <script setup>
-import { ref } from "vue";
-import { computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import { RouterLink } from "vue-router";
 
 const menuOpen = ref(false);
+const hidden = ref(false);
+let lastScroll = 0;
 
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value;
+}
 function closeMenu() {
   menuOpen.value = false;
 }
+
+function handleScroll() {
+  const currentScroll = window.pageYOffset;
+  hidden.value = currentScroll > lastScroll && currentScroll > 50;
+  lastScroll = currentScroll;
+}
+
+onMounted(() => window.addEventListener("scroll", handleScroll));
+onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 </script>
 
 <template>
-  <header
-    class="relative bg-primary bg-cover bg-center flex flex-col justify-between p-6"
+  <nav
+    :class="[
+      'fixed top-0 left-0 w-full z-50 bg-dark text-white transition-transform duration-300',
+      hidden ? '-translate-y-full' : 'translate-y-0',
+    ]"
   >
-    <div class="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
-    <nav class="relative z-50 flex justify-between items-center text-white">
-      <a href="/">
-        <h1 class="h1">Holidaze</h1>
-      </a>
-
-      <ul class="hidden md:flex gap-6">
-        <li>All Venues</li>
-        <li>Register</li>
-        <li>Log in</li>
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <RouterLink to="/" class="flex items-center gap-2">
+        <img src="/src/assets/logo.png" class="h-8 w-auto" />
+        <span class="logo">HOLIDAZE</span>
+      </RouterLink>
+      <ul class="hidden md:flex gap-6 items-center">
+        <li><RouterLink to="/venues">BROWSE VENUES</RouterLink></li>
+        <li><RouterLink to="/about">ABOUT US</RouterLink></li>
+        <li><RouterLink to="/contact">CONTACT</RouterLink></li>
       </ul>
+      <RouterLink to="/login" class="hidden md:inline-flex btn px-6 py-2"
+        >LOG IN</RouterLink
+      >
       <button
-        @click="menuOpen = !menuOpen"
-        class="md:hidden focus:outline-none relative z-[9999] cursor-pointer"
-        aria-label="Toggle menu"
+        @click="toggleMenu"
+        class="md:hidden focus:outline-none cursor-pointer"
       >
         <svg
           v-if="!menuOpen"
@@ -60,21 +78,26 @@ function closeMenu() {
           />
         </svg>
       </button>
-    </nav>
-
-    <hr class="hidden md:block text-white mt-2" />
-
+    </div>
     <transition name="fade">
       <ul
         v-if="menuOpen"
         @click.self="closeMenu"
-        class="absolute top-0 left-0 w-full h-full bg-black/80 text-white flex flex-col justify-center items-center gap-6 text-xl z-40"
+        class="absolute top-full left-0 w-full bg-dark flex flex-col items-center gap-4 py-6 text-xl"
       >
-        <li><a href="/register" @click="closeMenu">Sign up</a></li>
-        <li><a href="/login" @click="closeMenu">Log in</a></li>
+        <li>
+          <RouterLink to="/venues" @click="closeMenu">BROWSE VENUES</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/about" @click="closeMenu">ABOUT US</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/contact" @click="closeMenu">CONTACT</RouterLink>
+        </li>
+        <li><RouterLink to="/login" @click="closeMenu">LOG IN</RouterLink></li>
       </ul>
     </transition>
-  </header>
+  </nav>
 </template>
 
 <style scoped>
@@ -85,5 +108,8 @@ function closeMenu() {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.bg-dark {
+  background-color: #1a1a1a;
 }
 </style>
