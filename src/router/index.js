@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { uiStore } from "../store/ui.js";
+import { uiStore } from "../store/ui";
+import { useUserStore } from "../store/userStore";
 
 import Home from "../views/Home.vue";
 import VenueListPage from "../views/VenuesListPage.vue";
 import VenuePage from "../views/VenuePage.vue";
 import Profile from "../views/Profile.vue";
+import Login from "../views/Auth.vue";
+import ManagerPage from "../views/ManagerPage.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -17,10 +20,16 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/login",
-    component: "Auth",
+    path: "/manager-only",
+    name: "ManagerPage",
+    component: ManagerPage,
+    meta: { requiresAuth: true, requiresRole: "manager" },
   },
-
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
@@ -30,30 +39,29 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  uiStore.setLoading(true);
+  uiStore.startNavigation();
   uiStore.clearError();
 
   const requiresAuth = to.meta.requiresAuth;
   const requiredRole = to.meta.requiresRole;
 
-  try {
-    if (requiresAuth && !uiStore.isLoggedIn) {
-      uiStore.setError("You have to be logged in to visit this site.");
-      return next({ name: "Login" });
-    }
+  const userStore = useUserStore();
 
-    if (requiredRole && userStore.role !== requiredRole) {
-      uiStore.setError("You have no access to this site.");
-      return next({ name: "Home" });
-    }
-
-    next();
-  } catch (err) {
-    uiStore.setError("An error occurred when navigating.");
-    next({ name: "Home" });
-  } finally {
-    uiStore.setLoading(false);
+  if (requiresAuth && !userStore.isLoggedIn) {
+    uiStore.setError("You must be logged in to access this page.");
+    return next({ name: "Login" });
   }
+
+  if (requiredRole && userStore.role !== requiredRole) {
+    uiStore.setError("You do not have access to this area.");
+    return next({ name: "Home" });
+  }
+
+  next();
+});
+
+router.afterEach(() => {
+  uiStore.endNavigation();
 });
 
 export default router;

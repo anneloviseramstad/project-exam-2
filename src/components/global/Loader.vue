@@ -4,16 +4,16 @@ import { uiStore } from "../../store/ui";
 
 <template>
   <div
-    v-if="uiStore.loading"
-    class="fixed inset-0 z-40 flex items-center justify-center bg-black/10"
+    v-if="uiStore.navLoading"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"
   >
     <div
-      class="loader border-4 border-t-blue-500 border-gray-200 rounded-full w-12 h-12 animate-spin"
+      class="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"
     ></div>
   </div>
 </template>
 
-<style>
+<style scoped>
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -21,5 +21,8 @@ import { uiStore } from "../../store/ui";
   100% {
     transform: rotate(360deg);
   }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 </style>

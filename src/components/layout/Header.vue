@@ -64,7 +64,11 @@ onMounted(fetchVenues);
       <p v-if="venues[currentIndex]" class="hidden md:block text-white mt-2">
         {{ venues[currentIndex]?.description || "" }}
       </p>
-      <p v-else-if="loading" class="text-white">Laster...</p>
+      <div v-if="loading" class="flex justify-center items-center py-8">
+        <div
+          class="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"
+        ></div>
+      </div>
       <p v-else-if="error" class="text-red-500">{{ error }}</p>
     </div>
   </header>

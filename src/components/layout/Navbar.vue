@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { RouterLink } from "vue-router";
+import { useUserStore } from "../../store/userStore";
+
+const userStore = useUserStore();
 
 const menuOpen = ref(false);
 const hidden = ref(false);
@@ -11,6 +14,11 @@ function toggleMenu() {
 }
 function closeMenu() {
   menuOpen.value = false;
+}
+
+function logout() {
+  closeMenu();
+  userStore.logout();
 }
 
 function handleScroll() {
@@ -39,10 +47,17 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
         <li><RouterLink to="/venues">BROWSE VENUES</RouterLink></li>
         <li><RouterLink to="/about">ABOUT US</RouterLink></li>
         <li><RouterLink to="/contact">CONTACT</RouterLink></li>
+
+        <li v-if="!userStore.isLoggedIn">
+          <RouterLink to="/login" class="btn px-6 py-2">LOGIN</RouterLink>
+        </li>
+        <template v-else>
+          <li><RouterLink to="/profile">PROFILE</RouterLink></li>
+          <li>
+            <button @click="logout" class="btn px-4 py-2">LOG OUT</button>
+          </li>
+        </template>
       </ul>
-      <RouterLink to="/login" class="hidden md:inline-flex btn px-6 py-2"
-        >LOG IN</RouterLink
-      >
       <button
         @click="toggleMenu"
         class="md:hidden focus:outline-none cursor-pointer"
@@ -94,7 +109,16 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
         <li>
           <RouterLink to="/contact" @click="closeMenu">CONTACT</RouterLink>
         </li>
-        <li><RouterLink to="/login" @click="closeMenu">LOG IN</RouterLink></li>
+
+        <li v-if="!userStore.isLoggedIn">
+          <RouterLink to="/login" @click="closeMenu">LOG IN</RouterLink>
+        </li>
+        <template v-else>
+          <li>
+            <RouterLink to="/profile" @click="closeMenu">PROFILE</RouterLink>
+          </li>
+          <li><button @click="logout">LOG OUT</button></li>
+        </template>
       </ul>
     </transition>
   </nav>

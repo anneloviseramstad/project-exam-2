@@ -1,39 +1,23 @@
 import { reactive } from "vue";
 
 export const uiStore = reactive({
-  loading: false,
-  error: null,
+  navLoading: false,
 
-  setLoading(value) {
-    this.loading = value;
+  startNavigation() {
+    this.navLoading = true;
   },
 
-  setError(err) {
-    this.error = this.parseApiError(err);
+  endNavigation() {
+    this.navLoading = false;
+  },
+
+  error: null,
+
+  setError(message) {
+    this.error = message;
   },
 
   clearError() {
     this.error = null;
-  },
-
-  parseApiError(err) {
-    if (!err?.response?.data) return "Something went wrong.";
-
-    const apiErrors = err.response.data.errors;
-    if (Array.isArray(apiErrors)) {
-      return apiErrors
-        .map((e) => {
-          if (e.message.includes("stud.noroff.no"))
-            return "Only stud.noroff.no emails are allowed";
-          if (e.message.includes("Password must be at least"))
-            return "Password must be at least 8 characters";
-          if (e.message.includes("Email must be a valid email"))
-            return "Please enter a valid email";
-          return e.message;
-        })
-        .join("\n");
-    }
-
-    return err.response.data.message || err.message || "Something went wrong.";
   },
 });
