@@ -5,7 +5,6 @@ import Home from "../views/Home.vue";
 import VenueListPage from "../views/VenuesListPage.vue";
 import VenuePage from "../views/VenuePage.vue";
 import Profile from "../views/Profile.vue";
-import AdminDashboard from "../views/AdminDashboard.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -18,10 +17,8 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/admin",
-    name: "AdminDashboard",
-    component: AdminDashboard,
-    meta: { requiresAuth: true, requiresRole: "VenueManager" },
+    path: "/login",
+    component: "Auth",
   },
 
   { path: "/:pathMatch(.*)*", redirect: "/" },
