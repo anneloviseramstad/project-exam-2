@@ -1,9 +1,10 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import { RouterLink } from "vue-router";
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import { RouterLink, useRouter } from "vue-router";
 import { useUserStore } from "../../store/userStore";
 
 const userStore = useUserStore();
+const router = useRouter();
 
 const menuOpen = ref(false);
 const hidden = ref(false);
@@ -15,7 +16,6 @@ function toggleMenu() {
 function closeMenu() {
   menuOpen.value = false;
 }
-
 function logout() {
   closeMenu();
   userStore.logout();
@@ -29,6 +29,10 @@ function handleScroll() {
 
 onMounted(() => window.addEventListener("scroll", handleScroll));
 onUnmounted(() => window.removeEventListener("scroll", handleScroll));
+
+const displayName = computed(() => {
+  return userStore.user?.name || "PROFILE";
+});
 </script>
 
 <template>
@@ -38,21 +42,30 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
       hidden ? '-translate-y-full' : 'translate-y-0',
     ]"
   >
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <div
+      class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center font-medium"
+    >
       <RouterLink to="/" class="flex items-center gap-2">
         <img src="/src/assets/logo.png" class="h-8 w-auto" />
-        <span class="logo">HOLIDAZE</span>
+        <span class="logo font-bold">HOLIDAZE</span>
       </RouterLink>
-      <ul class="hidden md:flex gap-6 items-center">
+      <ul class="hidden md:flex gap-8 items-center">
         <li><RouterLink to="/venues">BROWSE VENUES</RouterLink></li>
         <li><RouterLink to="/about">ABOUT US</RouterLink></li>
         <li><RouterLink to="/contact">CONTACT</RouterLink></li>
-
+      </ul>
+      <ul class="hidden md:flex items-center gap-8">
         <li v-if="!userStore.isLoggedIn">
-          <RouterLink to="/login" class="btn px-6 py-2">LOGIN</RouterLink>
+          <RouterLink to="/auth?tab=login" class="btn px-6 py-2"
+            >LOGIN</RouterLink
+          >
         </li>
         <template v-else>
-          <li><RouterLink to="/profile">PROFILE</RouterLink></li>
+          <li>
+            <RouterLink to="/profile" class="text-primary font-semibold">{{
+              displayName
+            }}</RouterLink>
+          </li>
           <li>
             <button @click="logout" class="btn px-4 py-2">LOG OUT</button>
           </li>
@@ -111,13 +124,22 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
         </li>
 
         <li v-if="!userStore.isLoggedIn">
-          <RouterLink to="/login" @click="closeMenu">LOG IN</RouterLink>
+          <RouterLink to="/auth?tab=login" @click="closeMenu"
+            >LOG IN</RouterLink
+          >
         </li>
         <template v-else>
           <li>
-            <RouterLink to="/profile" @click="closeMenu">PROFILE</RouterLink>
+            <RouterLink
+              to="/profile"
+              class="text-primary font-semibold"
+              @click="closeMenu"
+              >{{ displayName }}</RouterLink
+            >
           </li>
-          <li><button @click="logout">LOG OUT</button></li>
+          <li>
+            <button @click="logout" class="btn px-4 py-2">LOG OUT</button>
+          </li>
         </template>
       </ul>
     </transition>

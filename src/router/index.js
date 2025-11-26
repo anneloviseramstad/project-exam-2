@@ -6,8 +6,8 @@ import Home from "../views/Home.vue";
 import VenueListPage from "../views/VenuesListPage.vue";
 import VenuePage from "../views/VenuePage.vue";
 import Profile from "../views/Profile.vue";
-import Login from "../views/Auth.vue";
 import ManagerPage from "../views/ManagerPage.vue";
+import Auth from "../views/Auth.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -26,9 +26,9 @@ const routes = [
     meta: { requiresAuth: true, requiresRole: "manager" },
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login,
+    path: "/auth",
+    name: "Auth",
+    component: Auth,
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth && !userStore.isLoggedIn) {
     uiStore.setError("You must be logged in to access this page.");
-    return next({ name: "Login" });
+    return next({ name: "Auth" });
   }
 
   if (requiredRole && userStore.role !== requiredRole) {

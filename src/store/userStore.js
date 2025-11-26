@@ -7,40 +7,49 @@ export const useUserStore = defineStore("user", {
     user: null,
     token: localStorage.getItem("token") || null,
   }),
-
   getters: {
     isLoggedIn: (state) => !!state.token,
+    username: (state) => state.user?.name || null,
     role: (state) => (state.user?.venueManager ? "manager" : "customer"),
   },
-
   actions: {
     async login(credentials) {
       const res = await authService.login(credentials);
+      const { data } = res;
 
-      this.token = res.accessToken;
-      localStorage.setItem("token", res.accessToken);
+      this.token = data.accessToken;
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("username", data.name);
 
-      await this.fetchProfile();
+      this.user = {
+        name: data.name,
+        email: data.email,
+        avatar: data.avatar,
+        banner: data.banner,
+        venueManager: data.venueManager,
+      };
 
-      router.push("/profile");
+      router.push({ name: "Home" });
     },
 
-    async register(data) {
-      return await authService.register(data);
+    async register(payload) {
+      await authService.register(payload);
+      router.push({ name: "Login" });
     },
 
-    async fetchProfile() {
-      if (!this.token) return;
-
-      const profile = await authService.getProfile();
-      this.user = profile;
+    loadFromStorage() {
+      const username = localStorage.getItem("username");
+      if (this.token && username) {
+        this.user = { name: username };
+      }
     },
 
     logout() {
       this.token = null;
       this.user = null;
       localStorage.removeItem("token");
-      router.push("/");
+      localStorage.removeItem("username");
+      router.push({ name: "Home" });
     },
   },
 });

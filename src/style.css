@@ -55,6 +55,10 @@ body {
   p {
     @apply font-base text-lg;
   }
+  li:hover,
+  a:hover {
+    @apply scale-105;
+  }
 }
 
 @layer components {
@@ -82,7 +86,13 @@ body {
   .btn {
     @apply bg-primary text-white font-semibold font-heading py-2 px-4 cursor-pointer text-center;
   }
+  .btn:hover {
+    @apply bg-primary-hover;
+  }
   .button:hover {
     @apply cursor-pointer;
+  }
+  .input {
+    @apply border;
   }
 }

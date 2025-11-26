@@ -7,7 +7,4 @@ export const authService = {
   login(credentials) {
     return api.post("/auth/login", credentials).then((res) => res.data);
   },
-  getProfile() {
-    return api.get("/users/user").then((res) => res.data);
-  },
 };
