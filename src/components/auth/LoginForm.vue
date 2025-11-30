@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "../../store/userStore";
-import { uiStore } from "../../store/ui";
+import { useUiStore } from "../../store/ui";
 
 const userStore = useUserStore();
+const uiStore = useUiStore();
 
 const email = ref("");
 const password = ref("");

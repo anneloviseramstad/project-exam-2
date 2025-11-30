@@ -1,18 +1,9 @@
 <script setup>
-import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { ref } from "vue";
 import LoginForm from "../components/auth/LoginForm.vue";
 import RegisterForm from "../components/auth/RegisterForm.vue";
 
-const route = useRoute();
-const tab = ref(route.query.tab || "login");
-
-watch(
-  () => route.query.tab,
-  (newTab) => {
-    if (newTab) tab.value = newTab;
-  }
-);
+const tab = ref("login");
 
 function switchTab(to) {
   tab.value = to;
@@ -31,6 +22,7 @@ function switchTab(to) {
       >
         Login
       </button>
+
       <button
         :class="[
           'px-4 py-2',

@@ -56,9 +56,7 @@ const displayName = computed(() => {
       </ul>
       <ul class="hidden md:flex items-center gap-8">
         <li v-if="!userStore.isLoggedIn">
-          <RouterLink to="/auth?tab=login" class="btn px-6 py-2"
-            >LOGIN</RouterLink
-          >
+          <RouterLink to="/auth" class="btn px-6 py-2">LOGIN</RouterLink>
         </li>
         <template v-else>
           <li>
@@ -124,9 +122,7 @@ const displayName = computed(() => {
         </li>
 
         <li v-if="!userStore.isLoggedIn">
-          <RouterLink to="/auth?tab=login" @click="closeMenu"
-            >LOG IN</RouterLink
-          >
+          <RouterLink to="/auth" @click="closeMenu">LOG IN</RouterLink>
         </li>
         <template v-else>
           <li>

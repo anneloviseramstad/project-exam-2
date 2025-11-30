@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-secondary text-base">
+  <footer class="bg-secondary text-base">
     <div class="container flex flex-col text-center gap-4">
       <p class="logo text-primary">Holidaze</p>
       <p class="text-2xl font-subheading mb-6">
@@ -11,5 +11,5 @@
         <li>Terms & Conditions</li>
       </ul>
     </div>
-  </div>
+  </footer>
 </template>

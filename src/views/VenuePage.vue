@@ -17,7 +17,7 @@ onMounted(async () => {
 
 <template>
   <Navbar />
-  <div v-if="venue" class="container mt-12">
+  <div v-if="venue" class="container">
     <Filterbar />
     <div class="flex flex-col gap-4 items-start">
       <img

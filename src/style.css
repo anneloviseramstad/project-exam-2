@@ -2,12 +2,27 @@
 
 @import "tailwindcss";
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   background: #faf9fb;
   color: #1f1f1f;
   margin: 0;
   padding: 0;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .loader {

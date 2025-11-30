@@ -2,11 +2,12 @@
 import { ref, onMounted } from "vue";
 import VenuesListView from "./VenuesListView.vue";
 import { venueService } from "../../api/venueService";
-import { uiStore } from "../../store/ui";
+import { useUiStore } from "../../store/ui";
 
 const venues = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const uiStore = useUiStore();
 
 onMounted(async () => {
   loading.value = true;

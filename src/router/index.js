@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { uiStore } from "../store/ui";
+import { useUiStore } from "../store/ui";
 import { useUserStore } from "../store/userStore";
 
 import Home from "../views/Home.vue";
@@ -39,20 +39,18 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const uiStore = useUiStore();
+  const userStore = useUserStore();
+
   uiStore.startNavigation();
   uiStore.clearError();
 
-  const requiresAuth = to.meta.requiresAuth;
-  const requiredRole = to.meta.requiresRole;
-
-  const userStore = useUserStore();
-
-  if (requiresAuth && !userStore.isLoggedIn) {
+  if (to.meta.requiresAuth && !userStore.isLoggedIn) {
     uiStore.setError("You must be logged in to access this page.");
     return next({ name: "Auth" });
   }
 
-  if (requiredRole && userStore.role !== requiredRole) {
+  if (to.meta.requiresRole && userStore.role !== to.meta.requiresRole) {
     uiStore.setError("You do not have access to this area.");
     return next({ name: "Home" });
   }
@@ -61,6 +59,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(() => {
+  const uiStore = useUiStore();
   uiStore.endNavigation();
 });
 

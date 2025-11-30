@@ -5,12 +5,17 @@ import router from "./router";
 import { createPinia } from "pinia";
 import { useUserStore } from "./store/userStore";
 
-const app = createApp(App);
-const pinia = createPinia();
-app.use(pinia);
-app.use(router);
+async function bootstrap() {
+  const app = createApp(App);
+  const pinia = createPinia();
 
-const userStore = useUserStore();
-userStore.loadFromStorage();
+  app.use(pinia);
+  app.use(router);
 
-app.mount("#app");
+  const userStore = useUserStore();
+  userStore.loadFromStorage();
+
+  app.mount("#app");
+}
+
+bootstrap();

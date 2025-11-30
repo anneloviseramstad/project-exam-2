@@ -1,5 +1,7 @@
 <script setup>
-import { uiStore } from "../../store/ui";
+import { useUiStore } from "../../store/ui";
+
+const uiStore = useUiStore();
 </script>
 
 <template>

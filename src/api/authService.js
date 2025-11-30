@@ -1,10 +1,22 @@
 import api from "./api";
 
 export const authService = {
-  register(userData) {
-    return api.post("/auth/register", userData).then((res) => res.data);
+  async register(userData) {
+    const res = await api.post("/auth/register", userData);
+    return res.data.data;
   },
-  login(credentials) {
-    return api.post("/auth/login", credentials).then((res) => res.data);
+
+  async login(credentials) {
+    const res = await api.post("/auth/login", credentials);
+    return res.data.data;
+  },
+
+  async getProfile(token) {
+    const res = await api.get("/holidaze/profiles/<name>", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data.data;
   },
 };

@@ -1,8 +1,9 @@
 <script setup>
 import { ref, watch } from "vue";
-import { uiStore } from "../../store/ui";
+import { useUiStore } from "../../store/ui";
 
 const showError = ref(null);
+const uiStore = useUiStore();
 
 watch(
   () => uiStore.error,
