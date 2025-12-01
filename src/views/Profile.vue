@@ -1,10 +1,24 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "../store/userStore";
 import { useRouter } from "vue-router";
+import { bookingService } from "../api/bookingService";
+import {
+  CalendarIcon,
+  UsersIcon,
+  CurrencyDollarIcon,
+} from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
 const router = useRouter();
+
+const bookings = ref([]);
+const loadingBookings = ref(false);
+
+function formatDate(dateStr) {
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  return new Date(dateStr).toLocaleDateString(undefined, options);
+}
 
 onMounted(async () => {
   if (!userStore.isLoggedIn) {
@@ -14,59 +28,118 @@ onMounted(async () => {
   if (!userStore.user) {
     await userStore.fetchProfile();
   }
+
+  if (userStore.user) {
+    loadingBookings.value = true;
+    try {
+      bookings.value = await bookingService.getBookingsByUser(
+        userStore.user.name
+      );
+    } catch (err) {
+      console.error("Failed to fetch bookings:", err);
+    } finally {
+      loadingBookings.value = false;
+    }
+  }
 });
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded shadow">
-    <h1 class="text-3xl font-bold mb-6">Profile</h1>
-
-    <div v-if="!userStore.user">Loading profile...</div>
-
-    <div v-else class="space-y-6">
-      <div v-if="userStore.user.banner?.url">
-        <img
-          :src="userStore.user.banner.url"
-          :alt="userStore.user.banner.alt"
-          class="w-full h-40 object-cover rounded"
-        />
-      </div>
-
-      <div class="flex items-center gap-4">
-        <img
-          :src="userStore.user.avatar?.url"
-          :alt="userStore.user.avatar?.alt"
-          class="w-20 h-20 rounded-full object-cover border"
-        />
-
-        <div>
-          <h2 class="text-2xl font-semibold">{{ userStore.user.name }}</h2>
-          <p class="text-gray-600">{{ userStore.user.email }}</p>
+  <div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-10">
+    <div>
+      <h1 class="text-3xl font-bold mb-6">Profile</h1>
+      <div v-if="!userStore.user">Loading profile...</div>
+      <div v-else class="space-y-6">
+        <div v-if="userStore.user.banner?.url">
+          <img
+            :src="userStore.user.banner.url"
+            :alt="userStore.user.banner.alt"
+            class="w-full h-40 object-cover rounded"
+          />
+        </div>
+        <div class="flex items-center gap-4">
+          <img
+            :src="userStore.user.avatar?.url"
+            :alt="userStore.user.avatar?.alt"
+            class="w-20 h-20 rounded-full object-cover border"
+          />
+          <div>
+            <h2 class="text-2xl font-semibold">{{ userStore.user.name }}</h2>
+            <p class="text-gray-600">{{ userStore.user.email }}</p>
+          </div>
+        </div>
+        <div v-if="userStore.user.bio">
+          <h3 class="text-xl font-semibold mb-1">Bio</h3>
+          <p>{{ userStore.user.bio }}</p>
+        </div>
+        <div class="mt-4">
+          <h3 class="text-xl font-semibold">Account Type</h3>
+          <p class="text-gray-700">
+            {{ userStore.user.venueManager ? "Venue Manager" : "Customer" }}
+          </p>
+        </div>
+        <div class="flex gap-10 mt-6">
+          <div>
+            <span class="font-bold">{{ userStore.user._count?.venues }}</span>
+            <span class="text-gray-600 ml-1">Venues</span>
+          </div>
+          <div>
+            <span class="font-bold">{{ bookings.length }}</span>
+            <span class="text-gray-600 ml-1">Bookings</span>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="space-y-6">
+      <h2 class="text-2xl font-semibold">My Bookings</h2>
 
-      <div v-if="userStore.user.bio">
-        <h3 class="text-xl font-semibold mb-1">Bio</h3>
-        <p>{{ userStore.user.bio }}</p>
+      <div v-if="loadingBookings" class="text-gray-600">
+        Loading bookings...
+      </div>
+      <div v-else-if="bookings.length === 0" class="text-gray-600">
+        You have no bookings yet.
       </div>
 
-      <div class="mt-4">
-        <h3 class="text-xl font-semibold">Account Type</h3>
-        <p class="text-gray-700">
-          {{ userStore.user.venueManager ? "Venue Manager" : "Customer" }}
-        </p>
-      </div>
-
-      <div class="flex gap-10 mt-6">
-        <div>
-          <span class="font-bold">{{ userStore.user._count?.venues }}</span>
-          <span class="text-gray-600 ml-1">Venues</span>
-        </div>
-        <div>
-          <span class="font-bold">{{ userStore.user._count?.bookings }}</span>
-          <span class="text-gray-600 ml-1">Bookings</span>
-        </div>
-      </div>
+      <ul v-else class="space-y-4">
+        <li
+          v-for="booking in bookings"
+          :key="booking.id"
+          class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg shadow-sm bg-white"
+        >
+          <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+            <img
+              :src="booking.venue.media?.[0]?.url || '/placeholder.jpg'"
+              :alt="booking.venue.name"
+              class="w-28 h-20 object-cover rounded-lg border"
+            />
+            <div class="flex flex-col gap-1">
+              <p class="font-semibold text-lg">{{ booking.venue.name }}</p>
+              <p class="text-gray-500 text-sm">
+                {{ booking.venue.location?.city }}
+              </p>
+            </div>
+          </div>
+          <div
+            class="flex flex-col sm:flex-row sm:items-center gap-4 mt-3 md:mt-0"
+          >
+            <div class="flex items-center gap-1 text-gray-600">
+              <CalendarIcon class="w-5 h-5" />
+              <span
+                >{{ formatDate(booking.dateFrom) }} →
+                {{ formatDate(booking.dateTo) }}</span
+              >
+            </div>
+            <div class="flex items-center gap-1 text-gray-600">
+              <UsersIcon class="w-5 h-5" />
+              <span>{{ booking.guests }} guests</span>
+            </div>
+            <div class="flex items-center gap-1 font-semibold">
+              <CurrencyDollarIcon class="w-5 h-5" />
+              <span>{{ booking.venue.price * booking.guests }} NOK</span>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>

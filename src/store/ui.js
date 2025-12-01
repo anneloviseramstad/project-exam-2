@@ -4,6 +4,7 @@ export const useUiStore = defineStore("uiStore", {
   state: () => ({
     navLoading: false,
     error: null,
+    message: null,
   }),
 
   actions: {
@@ -19,7 +20,15 @@ export const useUiStore = defineStore("uiStore", {
     clearError() {
       this.error = null;
     },
-
+    setMessage(msg) {
+      this.message = msg;
+      setTimeout(() => {
+        if (this.message === msg) this.message = null;
+      }, 3000);
+    },
+    clearMessage() {
+      this.message = null;
+    },
     parseApiError(err) {
       if (!err) return "Something went wrong.";
 
@@ -41,10 +50,8 @@ export const useUiStore = defineStore("uiStore", {
             })
             .join("\n");
         }
-
         return err.response.data.message || "Something went wrong.";
       }
-
       return err.message || "Something went wrong.";
     },
   },

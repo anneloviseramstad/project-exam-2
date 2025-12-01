@@ -1,15 +1,22 @@
 import api from "./api";
 
 export const venueService = {
-  getAllVenues() {
-    return api.get("/holidaze/venues").then((res) => res.data.data);
+  async getAllVenues() {
+    const response = await api.get("/holidaze/venues");
+    return response.data.data;
   },
-  getVenueById(id) {
-    return api.get(`/holidaze/venues/${id}`).then((res) => res.data.data);
+
+  async getVenueById(id, includeBookings = false) {
+    const url = includeBookings
+      ? `/holidaze/venues/${id}?_bookings=true`
+      : `/holidaze/venues/${id}`;
+
+    const response = await api.get(url);
+    return response.data.data;
   },
-  search(query) {
-    return api
-      .get(`/holidaze/venues?name_contains=${query}`)
-      .then((res) => res.data.data);
+
+  async search(query) {
+    const response = await api.get(`/holidaze/venues?name_contains=${query}`);
+    return response.data.data;
   },
 };
