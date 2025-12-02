@@ -3,7 +3,6 @@ import { defineStore } from "pinia";
 export const useUiStore = defineStore("uiStore", {
   state: () => ({
     navLoading: false,
-    error: null,
     message: null,
     messageType: "Success",
   }),
@@ -22,9 +21,6 @@ export const useUiStore = defineStore("uiStore", {
       setTimeout(() => {
         this.message = null;
       }, 3000);
-    },
-    clearError() {
-      this.error = null;
     },
     setMessage(msg, type = "Success") {
       this.message = msg;

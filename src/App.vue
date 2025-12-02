@@ -2,7 +2,6 @@
 import Navbar from "./components/layout/Navbar.vue";
 import Footer from "./components/layout/Footer.vue";
 import Loader from "./components/global/Loader.vue";
-import Error from "./components/global/Error.vue";
 import UiNotification from "./components/global/UiNotification.vue";
 </script>
 
@@ -10,7 +9,6 @@ import UiNotification from "./components/global/UiNotification.vue";
   <div class="min-h-screen flex flex-col">
     <Navbar />
     <Loader />
-    <Error />
     <UiNotification />
     <main class="md:pt-18 flex-1">
       <router-view />

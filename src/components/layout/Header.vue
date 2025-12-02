@@ -11,25 +11,30 @@ async function fetchVenues() {
   loading.value = true;
   error.value = "";
   try {
-    const data = await venueService.getAllVenues();
-    if (Array.isArray(data) && data.length) {
-      venues.value = data
-        .sort((a, b) => new Date(b.created) - new Date(a.created))
-        .slice(0, 5);
-    }
+    const response = await venueService.getAllVenues(1, 5);
+    const data = response.data || [];
+    venues.value = data.filter(
+      (v) => Array.isArray(v.media) && v.media.length > 0
+    );
+
+    currentIndex.value = 0;
   } catch (err) {
     console.error(err);
     error.value = "Kunne ikke hente venues.";
+    venues.value = [];
+    currentIndex.value = 0;
   } finally {
     loading.value = false;
   }
 }
 
 function nextVenue() {
+  if (!venues.value.length) return;
   currentIndex.value = (currentIndex.value + 1) % venues.value.length;
 }
 
 function prevVenue() {
+  if (!venues.value.length) return;
   currentIndex.value =
     (currentIndex.value - 1 + venues.value.length) % venues.value.length;
 }
@@ -39,7 +44,7 @@ onMounted(fetchVenues);
 
 <template>
   <header
-    class="relative h-[30vh] md:h-[60vh] w-full bg-cover bg-center flex items-center justify-center"
+    class="relative mx-auto h-[30vh] md:h-[50vh] bg-center bg-cover flex items-center justify-center rounded-lg shadow"
     :style="`background-image: url('${
       venues[currentIndex]?.media?.[0]?.url || '/placeholder.jpg'
     }')`"

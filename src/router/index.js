@@ -8,6 +8,7 @@ import VenuePage from "../views/VenuePage.vue";
 import Profile from "../views/Profile.vue";
 import ManagerPage from "../views/ManagerPage.vue";
 import Auth from "../views/Auth.vue";
+import CreateVenue from "../views/CreateVenue.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -26,6 +27,12 @@ const routes = [
     meta: { requiresAuth: true, requiresRole: "manager" },
   },
   {
+    path: "/manager-only/create",
+    name: "CreateVenue",
+    component: CreateVenue,
+    meta: { requiresAuth: true, requiresRole: "manager" },
+  },
+  {
     path: "/auth",
     name: "Auth",
     component: Auth,
@@ -38,20 +45,23 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const uiStore = useUiStore();
   const userStore = useUserStore();
 
   uiStore.startNavigation();
-  uiStore.clearError();
 
-  if (to.meta.requiresAuth && !userStore.isLoggedIn) {
-    uiStore.setError("You must be logged in to access this page.");
-    return next({ name: "Auth" });
+  if (!userStore.user && userStore.token) {
+    try {
+      await userStore.fetchProfile();
+    } catch (err) {
+      console.error("Failed to fetch profile:", err);
+      userStore.logout();
+    }
   }
 
   if (to.meta.requiresRole && userStore.role !== to.meta.requiresRole) {
-    uiStore.setError("You do not have access to this area.");
+    uiStore.setMessage("You do not have access to this area.", "Error");
     return next({ name: "Home" });
   }
 

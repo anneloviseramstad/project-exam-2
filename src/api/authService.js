@@ -11,11 +11,9 @@ export const authService = {
     return res.data.data;
   },
 
-  async getProfile(token) {
-    const res = await api.get("/holidaze/profiles/<name>", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  async getProfile(name, token) {
+    const res = await api.get(`/holidaze/profiles/${name}`, {
+      headers: { Authorization: `Bearer ${token}` },
     });
     return res.data.data;
   },

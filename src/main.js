@@ -15,6 +15,10 @@ async function bootstrap() {
   const userStore = useUserStore();
   userStore.loadFromStorage();
 
+  if (userStore.token && !userStore.user) {
+    await userStore.fetchProfile();
+  }
+
   app.mount("#app");
 }
 

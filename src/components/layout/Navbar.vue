@@ -33,6 +33,10 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 const displayName = computed(() => {
   return userStore.user?.name || "PROFILE";
 });
+
+const profileUrl = computed(() => {
+  return userStore.role === "manager" ? "/manager-only" : "/profile";
+});
 </script>
 
 <template>
@@ -60,7 +64,7 @@ const displayName = computed(() => {
         </li>
         <template v-else>
           <li>
-            <RouterLink to="/profile" class="text-primary font-semibold">{{
+            <RouterLink :to="profileUrl" class="text-primary font-semibold">{{
               displayName
             }}</RouterLink>
           </li>
@@ -127,7 +131,7 @@ const displayName = computed(() => {
         <template v-else>
           <li>
             <RouterLink
-              to="/profile"
+              :to="profileUrl"
               class="text-primary font-semibold"
               @click="closeMenu"
               >{{ displayName }}</RouterLink

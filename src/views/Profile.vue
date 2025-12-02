@@ -94,7 +94,11 @@ async function cancelBooking(bookingId) {
         <div class="mt-4">
           <h3 class="text-xl font-semibold">Account Type</h3>
           <p class="text-gray-700">
-            {{ userStore.user.venueManager ? "Venue Manager" : "Customer" }}
+            {{
+              userStore.user.venueManager || userStore.user.venue_manager
+                ? "Venue Manager"
+                : "Customer"
+            }}
           </p>
         </div>
         <div class="flex gap-10 mt-6">
