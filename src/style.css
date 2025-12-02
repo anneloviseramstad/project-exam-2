@@ -70,9 +70,8 @@ body {
   p {
     @apply font-base text-lg;
   }
-  li:hover,
-  a:hover {
-    @apply scale-105;
+  button {
+    @apply cursor-pointer;
   }
 }
 

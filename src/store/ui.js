@@ -5,6 +5,7 @@ export const useUiStore = defineStore("uiStore", {
     navLoading: false,
     error: null,
     message: null,
+    messageType: "Success",
   }),
 
   actions: {
@@ -15,13 +16,19 @@ export const useUiStore = defineStore("uiStore", {
       this.navLoading = false;
     },
     setError(err) {
-      this.error = this.parseApiError(err);
+      this.message = this.parseApiError(err);
+      this.messageType = "Error";
+
+      setTimeout(() => {
+        this.message = null;
+      }, 3000);
     },
     clearError() {
       this.error = null;
     },
-    setMessage(msg) {
+    setMessage(msg, type = "Success") {
       this.message = msg;
+      this.messageType = type;
       setTimeout(() => {
         if (this.message === msg) this.message = null;
       }, 3000);

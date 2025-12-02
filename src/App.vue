@@ -3,7 +3,7 @@ import Navbar from "./components/layout/Navbar.vue";
 import Footer from "./components/layout/Footer.vue";
 import Loader from "./components/global/Loader.vue";
 import Error from "./components/global/Error.vue";
-import BookingConfirmation from "./components/booking/BookingConfirmation.vue";
+import UiNotification from "./components/global/UiNotification.vue";
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import BookingConfirmation from "./components/booking/BookingConfirmation.vue";
     <Navbar />
     <Loader />
     <Error />
-    <BookingConfirmation />
+    <UiNotification />
     <main class="md:pt-18 flex-1">
       <router-view />
     </main>

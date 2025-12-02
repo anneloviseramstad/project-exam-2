@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useUserStore } from "../store/userStore";
 import { useRouter } from "vue-router";
 import { bookingService } from "../api/bookingService";
+import { useUiStore } from "../store/ui";
 import {
   CalendarIcon,
   UsersIcon,
@@ -10,20 +11,22 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
+const uiStore = useUiStore();
 const router = useRouter();
 
 const bookings = ref([]);
 const loadingBookings = ref(false);
 
 function formatDate(dateStr) {
-  const options = { year: "numeric", month: "short", day: "numeric" };
-  return new Date(dateStr).toLocaleDateString(undefined, options);
+  return new Date(dateStr).toLocaleDateString("no-NO", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 
 onMounted(async () => {
-  if (!userStore.isLoggedIn) {
-    return router.push("/auth?tab=login");
-  }
+  if (!userStore.isLoggedIn) return router.push("/auth?tab=login");
 
   if (!userStore.user) {
     await userStore.fetchProfile();
@@ -42,6 +45,22 @@ onMounted(async () => {
     }
   }
 });
+
+async function cancelBooking(bookingId) {
+  const confirmed = confirm("Are you sure you want to cancel your booking?");
+  if (!confirmed) return;
+
+  try {
+    await bookingService.cancelBooking(bookingId);
+
+    bookings.value = bookings.value.filter((b) => b.id !== bookingId);
+
+    uiStore.setMessage("You have now cancelled your booking.", "Warning");
+  } catch (err) {
+    console.error("Could not cancel booking:", err);
+    uiStore.setError("Failed to cancel booking");
+  }
+}
 </script>
 
 <template>
@@ -92,25 +111,23 @@ onMounted(async () => {
     </div>
     <div class="space-y-6">
       <h2 class="text-2xl font-semibold">My Bookings</h2>
-
       <div v-if="loadingBookings" class="text-gray-600">
         Loading bookings...
       </div>
       <div v-else-if="bookings.length === 0" class="text-gray-600">
         You have no bookings yet.
       </div>
-
       <ul v-else class="space-y-4">
         <li
           v-for="booking in bookings"
           :key="booking.id"
-          class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg shadow-sm bg-white"
+          class="flex flex-col md:flex-row justify-between items-start md:items-center shadow-sm bg-white p-4"
         >
           <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
             <img
               :src="booking.venue.media?.[0]?.url || '/placeholder.jpg'"
               :alt="booking.venue.name"
-              class="w-28 h-20 object-cover rounded-lg border"
+              class="w-28 h-20 object-cover"
             />
             <div class="flex flex-col gap-1">
               <p class="font-semibold text-lg">{{ booking.venue.name }}</p>
@@ -138,6 +155,12 @@ onMounted(async () => {
               <span>{{ booking.venue.price * booking.guests }} NOK</span>
             </div>
           </div>
+          <button
+            class="mt-2 md:mt-0 text-red-600 hover:text-red-800 font-semibold"
+            @click="cancelBooking(booking.id)"
+          >
+            Cancel
+          </button>
         </li>
       </ul>
     </div>
