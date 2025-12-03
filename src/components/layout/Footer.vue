@@ -1,15 +1,42 @@
 <template>
-  <footer class="bg-secondary text-base">
-    <div class="container flex flex-col text-center gap-4">
-      <p class="logo text-primary">Holidaze</p>
-      <p class="text-2xl font-subheading mb-6">
-        THE EASIEST WAY TO BOOK YOUR STAY
+  <footer class="text-base mb-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-center py-8">
+        <div class="flex flex-col gap-2">
+          <img src="/src/assets/logo.png" class="w-8 h-10" />
+          <p class="logo">holidaze</p>
+          <p class="text-gray-400 text-base">
+            The easiest way to book your stay.
+          </p>
+        </div>
+        <div class="flex justify-end gap-12">
+          <div>
+            <h4>Quick Links</h4>
+            <ul>
+              <li>Home</li>
+              <li>Venues</li>
+              <li>About</li>
+              <li>Contact Us</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Support</h4>
+            <li>Help Center</li>
+            <li>Live Chat</li>
+          </div>
+          <div>
+            <h4>Legal Information</h4>
+            <li>Terms & Conditions</li>
+            <li>Health & Safety</li>
+            <li>Privacy Policy</li>
+            <li>Cookie Policy</li>
+          </div>
+        </div>
+      </div>
+      <hr class="text-gray-300" />
+      <p class="text-gray-400 text-sm py-4">
+        2025 Holidaze. All Rights Reserved.
       </p>
-      <ul class="flex gap-8 justify-center">
-        <li>About Us</li>
-        <li>Get in touch</li>
-        <li>Terms & Conditions</li>
-      </ul>
     </div>
   </footer>
 </template>

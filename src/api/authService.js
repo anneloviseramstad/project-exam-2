@@ -5,12 +5,10 @@ export const authService = {
     const res = await api.post("/auth/register", userData);
     return res.data.data;
   },
-
   async login(credentials) {
     const res = await api.post("/auth/login", credentials);
     return res.data.data;
   },
-
   async getProfile(name, token) {
     const res = await api.get(`/holidaze/profiles/${name}`, {
       headers: { Authorization: `Bearer ${token}` },

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { venueService } from "../../api/venueService";
+import { bookingService } from "../../api/bookingService";
 import VenueCard from "../venue/VenueCard.vue";
 
 const location = ref("");
@@ -20,33 +21,39 @@ async function searchVenues() {
   results.value = [];
 
   try {
-    let data = await venueService.getAllVenues();
+    const response = await venueService.getAllVenues(1, 100);
+    const venues = response.data || [];
 
-    if (!Array.isArray(data)) data = [data];
-
-    results.value = data.filter((venue) => {
+    let filtered = venues.filter((venue) => {
       const matchLocation = location.value
         ? venue.location?.city
             ?.toLowerCase()
             .includes(location.value.toLowerCase())
         : true;
-
-      const matchGuests = guests.value ? venue.maxGuests >= guests.value : true;
-
-      let matchDates = true;
-      if (checkIn.value && checkOut.value && Array.isArray(venue.bookings)) {
-        const checkInDate = new Date(checkIn.value);
-        const checkOutDate = new Date(checkOut.value);
-
-        matchDates = !venue.bookings.some((booking) => {
-          const bookingFrom = new Date(booking.dateFrom);
-          const bookingTo = new Date(booking.dateTo);
-          return checkInDate <= bookingTo && checkOutDate >= bookingFrom;
-        });
-      }
-
-      return matchLocation && matchGuests && matchDates;
+      const matchGuests = guests.value
+        ? Number(venue.maxGuests) >= guests.value
+        : true;
+      return matchLocation && matchGuests;
     });
+
+    if (checkIn.value && checkOut.value) {
+      const checkInDate = new Date(checkIn.value);
+      const checkOutDate = new Date(checkOut.value);
+      const bookingsList = await Promise.all(
+        filtered.map((venue) => bookingService.getBookingsByVenue(venue.id))
+      );
+
+      filtered = filtered.filter((venue, idx) => {
+        const bookings = bookingsList[idx] || [];
+        return !bookings.some((b) => {
+          const from = new Date(b.dateFrom);
+          const to = new Date(b.dateTo);
+          return checkInDate <= to && checkOutDate >= from;
+        });
+      });
+    }
+
+    results.value = filtered;
   } catch (err) {
     console.error("API error:", err);
     error.value = "Error loading venues. Try again later.";

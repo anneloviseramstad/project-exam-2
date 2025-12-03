@@ -44,12 +44,12 @@ onMounted(fetchVenues);
 
 <template>
   <header
-    class="relative mx-auto h-[30vh] md:h-[50vh] bg-center bg-cover flex items-center justify-center rounded-lg shadow"
+    class="relative mx-auto max-w-6xl h-[30vh] md:h-[50vh] bg-center bg-cover flex items-center justify-center rounded-3xl shadow"
     :style="`background-image: url('${
       venues[currentIndex]?.media?.[0]?.url || '/placeholder.jpg'
     }')`"
   >
-    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="absolute inset-0 bg-black/70 rounded-3xl"></div>
     <div
       class="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer text-white text-3xl"
       @click="prevVenue"
@@ -67,7 +67,8 @@ onMounted(fetchVenues);
         {{ venues[currentIndex]?.name || "" }}
       </h1>
       <p v-if="venues[currentIndex]" class="hidden md:block text-white mt-2">
-        {{ venues[currentIndex]?.description || "" }}
+        {{ venues[currentIndex]?.location.country || "" }},
+        {{ venues[currentIndex]?.location.city || "" }}
       </p>
       <div v-if="loading" class="flex justify-center items-center py-8">
         <div

@@ -42,7 +42,7 @@ const profileUrl = computed(() => {
 <template>
   <nav
     :class="[
-      'fixed top-0 left-0 w-full z-50 bg-dark text-white transition-transform duration-300',
+      'bg-white fixed top-0 left-0 w-full z-50 text-black transition-transform duration-300',
       hidden ? '-translate-y-full' : 'translate-y-0',
     ]"
   >
@@ -51,7 +51,7 @@ const profileUrl = computed(() => {
     >
       <RouterLink to="/" class="flex items-center gap-2">
         <img src="/src/assets/logo.png" class="h-8 w-auto" />
-        <span class="logo font-bold">HOLIDAZE</span>
+        <span class="logo">holidaze</span>
       </RouterLink>
       <ul class="hidden md:flex gap-8 items-center">
         <li><RouterLink to="/venues">BROWSE VENUES</RouterLink></li>

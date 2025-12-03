@@ -10,8 +10,8 @@ const router = useRouter();
 
 const email = ref("");
 const password = ref("");
-const loading = ref(false);
 
+const loading = ref(false);
 const fieldErrors = ref({
   email: null,
   password: null,
@@ -59,7 +59,6 @@ async function handleLogin() {
     <p v-if="fieldErrors.email" class="text-red-500 text-sm">
       {{ fieldErrors.email }}
     </p>
-
     <input
       v-model="password"
       type="password"
@@ -69,7 +68,6 @@ async function handleLogin() {
     <p v-if="fieldErrors.password" class="text-red-500 text-sm">
       {{ fieldErrors.password }}
     </p>
-
     <button
       type="submit"
       :disabled="loading"
