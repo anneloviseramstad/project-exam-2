@@ -9,6 +9,7 @@ import Profile from "../views/Profile.vue";
 import ManagerPage from "../views/ManagerPage.vue";
 import Auth from "../views/Auth.vue";
 import CreateVenue from "../views/CreateVenue.vue";
+import EditVenue from "../views/EditVenue.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -30,6 +31,13 @@ const routes = [
     path: "/manager-only/create",
     name: "CreateVenue",
     component: CreateVenue,
+    meta: { requiresAuth: true, requiresRole: "manager" },
+  },
+  {
+    path: "/manager-only/edit/:id",
+    name: "EditVenue",
+    component: EditVenue,
+    props: true,
     meta: { requiresAuth: true, requiresRole: "manager" },
   },
   {

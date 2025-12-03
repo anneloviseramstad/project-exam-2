@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { useUiStore } from "../../store/ui";
-import { useUserStore } from "../../store/userStore";
-import { venueService } from "../../api/venueService";
+import { useUiStore } from "../store/ui";
+import { useUserStore } from "../store/userStore";
+import { venueService } from "../api/venueService";
 
 const uiStore = useUiStore();
 const userStore = useUserStore();
@@ -31,7 +31,7 @@ onMounted(async () => {
   try {
     const venue = await venueService.getVenueById(venueId);
 
-    if (venue.manager !== userStore.user.name) {
+    if (venue.owner && venue.owner.name !== userStore.user.name) {
       uiStore.setMessage(
         "You do not have permission to edit this venue",
         "Error"

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useUiStore } from "../store/ui";
 import { useUserStore } from "../store/userStore";
@@ -8,11 +8,13 @@ import { venueService } from "../api/venueService";
 const uiStore = useUiStore();
 const userStore = useUserStore();
 const router = useRouter();
+
 const name = ref("");
 const description = ref("");
 const price = ref(0);
 const maxGuests = ref(1);
-const location = ref({
+
+const location = reactive({
   address: "",
   city: "",
   zip: "",
@@ -22,7 +24,7 @@ const location = ref({
   lng: 0,
 });
 
-const meta = ref({
+const meta = reactive({
   wifi: false,
   parking: false,
   breakfast: false,
@@ -62,11 +64,12 @@ async function handleCreateVenue() {
     if (!name.value) fieldErrors.value.name = "Name is required";
     if (!description.value)
       fieldErrors.value.description = "Description is required";
-    if (!location.value.city) fieldErrors.value.location = "City is required";
+    if (!location.city) fieldErrors.value.location = "City is required";
     if (price.value <= 0)
       fieldErrors.value.price = "Price must be greater than 0";
     if (maxGuests.value <= 0)
       fieldErrors.value.maxGuests = "Max guests must be greater than 0";
+
     if (Object.values(fieldErrors.value).some(Boolean)) {
       loading.value = false;
       return;
@@ -77,8 +80,8 @@ async function handleCreateVenue() {
       description: description.value,
       price: Number(price.value),
       maxGuests: Number(maxGuests.value),
-      location: location.value,
-      meta: meta.value,
+      location: { ...location },
+      meta: { ...meta },
       media: media.value,
       manager: userStore.user.name,
     };
@@ -99,7 +102,6 @@ async function handleCreateVenue() {
 <template>
   <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-6">
     <h1 class="text-2xl font-bold mb-4">Create Venue</h1>
-
     <form @submit.prevent="handleCreateVenue" class="space-y-4">
       <input
         v-model="name"
@@ -110,6 +112,7 @@ async function handleCreateVenue() {
       <p v-if="fieldErrors.name" class="text-red-500 text-sm">
         {{ fieldErrors.name }}
       </p>
+
       <textarea
         v-model="description"
         placeholder="Description"
@@ -127,6 +130,7 @@ async function handleCreateVenue() {
       <p v-if="fieldErrors.price" class="text-red-500 text-sm">
         {{ fieldErrors.price }}
       </p>
+
       <input
         v-model.number="maxGuests"
         type="number"
@@ -197,7 +201,7 @@ async function handleCreateVenue() {
       <button
         type="submit"
         :disabled="loading"
-        class="px-6 py-2 bg-primary-500 text-white rounded mt-4"
+        class="px-6 py-2 bg-primary-500 text-black rounded mt-4"
       >
         {{ loading ? "Creating..." : "Create Venue" }}
       </button>
