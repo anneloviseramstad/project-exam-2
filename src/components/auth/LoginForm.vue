@@ -41,7 +41,7 @@ async function handleLogin() {
         fieldErrors.value.password = "Incorrect password";
     });
 
-    uiStore.setMessage("Login failed", "Error");
+    uiStore.setMessage(uiStore.parseApiError(err), "Error");
   } finally {
     loading.value = false;
   }
@@ -71,7 +71,7 @@ async function handleLogin() {
     <button
       type="submit"
       :disabled="loading"
-      class="px-6 py-2 bg-blue-500 text-white rounded"
+      class="px-6 py-2 bg-black text-white rounded-full"
     >
       {{ loading ? "Logging in..." : "Login" }}
     </button>

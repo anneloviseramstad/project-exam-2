@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUiStore } from "../store/ui";
 import { useUserStore } from "../store/userStore";
@@ -14,9 +14,27 @@ const venueId = route.params.id;
 
 const name = ref("");
 const description = ref("");
-const location = ref("");
 const price = ref(0);
-const mediaUrl = ref("");
+const maxGuests = ref(1);
+
+const location = reactive({
+  address: "",
+  city: "",
+  zip: "",
+  country: "",
+  continent: "",
+  lat: 0,
+  lng: 0,
+});
+
+const meta = reactive({
+  wifi: false,
+  parking: false,
+  breakfast: false,
+  pets: false,
+});
+
+const media = ref([{ url: "", alt: "" }]);
 
 const loading = ref(false);
 const fieldErrors = ref({
@@ -24,14 +42,16 @@ const fieldErrors = ref({
   description: null,
   location: null,
   price: null,
+  maxGuests: null,
 });
 
 onMounted(async () => {
   loading.value = true;
+
   try {
     const venue = await venueService.getVenueById(venueId);
 
-    if (venue.owner && venue.owner.name !== userStore.user.name) {
+    if (venue.owner && venue.owner.name !== userStore.user?.name) {
       uiStore.setMessage(
         "You do not have permission to edit this venue",
         "Error"
@@ -41,17 +61,36 @@ onMounted(async () => {
 
     name.value = venue.name;
     description.value = venue.description;
-    location.value = venue.location?.city || "";
     price.value = venue.price;
-    mediaUrl.value = venue.media?.[0]?.url || "";
-  } catch (err) {
-    console.error(err);
-    uiStore.setMessage("Failed to load venue data", "Error");
+    maxGuests.value = venue.maxGuests;
+
+    if (venue.location) {
+      Object.assign(location, venue.location);
+    }
+
+    if (venue.meta) {
+      Object.assign(meta, venue.meta);
+    }
+
+    media.value = venue.media?.length
+      ? venue.media.map((m) => ({ url: m.url, alt: m.alt || "" }))
+      : [{ url: "", alt: "" }];
+  } catch (e) {
+    console.error(e);
+    uiStore.setMessage("Failed to load venue", "Error");
     router.push("/manager-only");
   } finally {
     loading.value = false;
   }
 });
+
+function addMediaField() {
+  media.value.push({ url: "", alt: "" });
+}
+
+function removeMediaField(index) {
+  media.value.splice(index, 1);
+}
 
 async function handleEditVenue() {
   loading.value = true;
@@ -60,16 +99,18 @@ async function handleEditVenue() {
     description: null,
     location: null,
     price: null,
+    maxGuests: null,
   };
 
   try {
     if (!name.value) fieldErrors.value.name = "Name is required";
     if (!description.value)
       fieldErrors.value.description = "Description is required";
-    if (!location.value) fieldErrors.value.location = "Location is required";
+    if (!location.city) fieldErrors.value.location = "City is required";
     if (price.value <= 0)
       fieldErrors.value.price = "Price must be greater than 0";
-
+    if (maxGuests.value <= 0)
+      fieldErrors.value.maxGuests = "Max guests must be greater than 0";
     if (Object.values(fieldErrors.value).some(Boolean)) {
       loading.value = false;
       return;
@@ -78,9 +119,11 @@ async function handleEditVenue() {
     const payload = {
       name: name.value,
       description: description.value,
-      location: { city: location.value },
       price: Number(price.value),
-      media: [{ url: mediaUrl.value, alt: "Venue image" }],
+      maxGuests: Number(maxGuests.value),
+      location: { ...location },
+      meta: { ...meta },
+      media: media.value,
     };
 
     await venueService.updateVenue(venueId, payload);
@@ -97,70 +140,108 @@ async function handleEditVenue() {
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
-    <h1 class="text-2xl font-bold mb-6">Edit Venue</h1>
-
+  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-6">
+    <h1 class="text-2xl font-bold mb-4">Edit Venue</h1>
     <form @submit.prevent="handleEditVenue" class="space-y-4">
-      <div>
+      <input
+        v-model="name"
+        type="text"
+        placeholder="Venue Name"
+        class="w-full p-2 border rounded"
+      />
+      <p v-if="fieldErrors.name" class="text-red-500 text-sm">
+        {{ fieldErrors.name }}
+      </p>
+      <textarea
+        v-model="description"
+        placeholder="Description"
+        class="w-full p-2 border rounded"
+      ></textarea>
+      <p v-if="fieldErrors.description" class="text-red-500 text-sm">
+        {{ fieldErrors.description }}
+      </p>
+      <input
+        v-model.number="price"
+        type="number"
+        placeholder="Price per night"
+        class="w-full p-2 border rounded"
+      />
+      <p v-if="fieldErrors.price" class="text-red-500 text-sm">
+        {{ fieldErrors.price }}
+      </p>
+      <input
+        v-model.number="maxGuests"
+        type="number"
+        placeholder="Max Guests"
+        class="w-full p-2 border rounded"
+      />
+      <p v-if="fieldErrors.maxGuests" class="text-red-500 text-sm">
+        {{ fieldErrors.maxGuests }}
+      </p>
+      <h2 class="font-semibold mt-4">Location</h2>
+      <input
+        v-model="location.address"
+        placeholder="Address"
+        class="w-full p-2 border rounded"
+      />
+      <input
+        v-model="location.city"
+        placeholder="City"
+        class="w-full p-2 border rounded"
+      />
+      <input
+        v-model="location.zip"
+        placeholder="ZIP"
+        class="w-full p-2 border rounded"
+      />
+      <input
+        v-model="location.country"
+        placeholder="Country"
+        class="w-full p-2 border rounded"
+      />
+      <input
+        v-model="location.continent"
+        placeholder="Continent"
+        class="w-full p-2 border rounded"
+      />
+      <h2 class="font-semibold mt-4">Facilities</h2>
+      <label><input type="checkbox" v-model="meta.wifi" /> WiFi</label>
+      <label><input type="checkbox" v-model="meta.parking" /> Parking</label>
+      <label
+        ><input type="checkbox" v-model="meta.breakfast" /> Breakfast</label
+      >
+      <label><input type="checkbox" v-model="meta.pets" /> Pets</label>
+      <h2 class="font-semibold mt-4">Media</h2>
+      <div v-for="(m, index) in media" :key="index" class="space-y-2">
         <input
-          v-model="name"
-          type="text"
-          placeholder="Venue Name"
-          class="w-full p-2 border rounded"
-        />
-        <p v-if="fieldErrors.name" class="text-red-500 text-sm">
-          {{ fieldErrors.name }}
-        </p>
-      </div>
-
-      <div>
-        <textarea
-          v-model="description"
-          placeholder="Description"
-          class="w-full p-2 border rounded"
-        ></textarea>
-        <p v-if="fieldErrors.description" class="text-red-500 text-sm">
-          {{ fieldErrors.description }}
-        </p>
-      </div>
-
-      <div>
-        <input
-          v-model="location"
-          type="text"
-          placeholder="City"
-          class="w-full p-2 border rounded"
-        />
-        <p v-if="fieldErrors.location" class="text-red-500 text-sm">
-          {{ fieldErrors.location }}
-        </p>
-      </div>
-
-      <div>
-        <input
-          v-model="price"
-          type="number"
-          placeholder="Price per night"
-          class="w-full p-2 border rounded"
-        />
-        <p v-if="fieldErrors.price" class="text-red-500 text-sm">
-          {{ fieldErrors.price }}
-        </p>
-      </div>
-
-      <div>
-        <input
-          v-model="mediaUrl"
+          v-model="m.url"
           type="url"
           placeholder="Image URL"
           class="w-full p-2 border rounded"
         />
-      </div>
+        <input
+          v-model="m.alt"
+          type="text"
+          placeholder="Alt text"
+          class="w-full p-2 border rounded"
+        />
 
+        <button
+          type="button"
+          @click="removeMediaField(index)"
+          class="text-red-500"
+          v-if="media.length > 1"
+        >
+          Remove
+        </button>
+      </div>
+      <button type="button" @click="addMediaField" class="text-primary-500">
+        Add Image
+      </button>
       <button
         type="submit"
         :disabled="loading"
-        class="px-6 py-2 bg-blue-500 text-white rounded"
+        class="px-6 py-2 bg-primary-500 text-black rounded mt-4"
       >
         {{ loading ? "Updating..." : "Update Venue" }}
       </button>

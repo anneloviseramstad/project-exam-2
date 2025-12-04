@@ -10,6 +10,7 @@ import ManagerPage from "../views/ManagerPage.vue";
 import Auth from "../views/Auth.vue";
 import CreateVenue from "../views/CreateVenue.vue";
 import EditVenue from "../views/EditVenue.vue";
+import EditProfile from "../views/EditProfile.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -39,6 +40,12 @@ const routes = [
     component: EditVenue,
     props: true,
     meta: { requiresAuth: true, requiresRole: "manager" },
+  },
+  {
+    path: "/profile/edit",
+    name: "EditProfile",
+    component: EditProfile,
+    meta: { requiresAuth: true },
   },
   {
     path: "/auth",

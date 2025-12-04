@@ -27,36 +27,39 @@ async function handleRegister() {
   fieldErrors.value = { name: null, email: null, password: null };
 
   try {
-    await userStore.register({
+    const payload = {
       name: name.value,
       email: email.value,
       password: password.value,
       venueManager: venueManager.value,
-      avatar: { url: avatarUrl.value, alt: "Avatar" },
-      banner: { url: bannerUrl.value, alt: "Banner" },
-    });
+    };
 
+    if (avatarUrl.value.trim())
+      payload.avatar = { url: avatarUrl.value, alt: "Avatar" };
+    if (bannerUrl.value.trim())
+      payload.banner = { url: bannerUrl.value, alt: "Banner" };
+
+    await userStore.register(payload);
     await userStore.fetchProfile();
 
     uiStore.setMessage("Registration successful!", "Success");
 
-    if (userStore.role === "manager") {
-      router.push({ name: "ManagerPage" });
-    } else {
-      router.push({ name: "Profile" });
-    }
+    router.push(
+      userStore.role === "manager"
+        ? { name: "ManagerPage" }
+        : { name: "Profile" }
+    );
   } catch (err) {
     const apiErrors = err?.response?.data?.errors || [];
     apiErrors.forEach((e) => {
-      if (e.message.includes("valid email"))
-        fieldErrors.value.email = "Please enter a valid email";
-      if (e.message.includes("stud.noroff.no"))
-        fieldErrors.value.email = "Only stud.noroff.no emails allowed";
-      if (e.message.includes("Password"))
-        fieldErrors.value.password = "Password must be at least 8 characters";
+      if (e.message.toLowerCase().includes("email"))
+        fieldErrors.value.email = e.message;
+      if (e.message.toLowerCase().includes("password"))
+        fieldErrors.value.password = e.message;
+      if (e.message.toLowerCase().includes("name"))
+        fieldErrors.value.name = e.message;
     });
-
-    uiStore.setMessage("Registration failed", "Error");
+    uiStore.setMessage(uiStore.parseApiError(err), "Error");
   } finally {
     loading.value = false;
   }
@@ -64,7 +67,7 @@ async function handleRegister() {
 </script>
 
 <template>
-  <form @submit.prevent="handleRegister" class="space-y-4">
+  <form @submit.prevent="handleRegister" class="space-y-4 max-w-md mx-auto p-4">
     <input
       v-model="name"
       type="text"
@@ -99,19 +102,19 @@ async function handleRegister() {
     <input
       v-model="avatarUrl"
       type="url"
-      placeholder="Avatar URL"
+      placeholder="Avatar URL (optional)"
       class="w-full p-2 border rounded"
     />
     <input
       v-model="bannerUrl"
       type="url"
-      placeholder="Banner URL"
+      placeholder="Banner URL (optional)"
       class="w-full p-2 border rounded"
     />
     <button
       type="submit"
       :disabled="loading"
-      class="px-6 py-2 bg-primary-500 text-white rounded"
+      class="w-full px-6 py-2 bg-black text-white rounded-full"
     >
       {{ loading ? "Registering..." : "Register" }}
     </button>

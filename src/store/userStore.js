@@ -78,6 +78,26 @@ export const useUserStore = defineStore("user", {
         this.logout();
       }
     },
+    async updateProfile(payload) {
+      if (!this.token) throw new Error("Not authenticated");
+
+      const updatedUser = await authService.updateProfile(
+        this.user.name,
+        payload,
+        this.token
+      );
+
+      this.user = {
+        ...this.user,
+        avatar: updatedUser.avatar || this.user.avatar,
+        banner: updatedUser.banner || this.user.banner,
+        bio: updatedUser.bio ?? this.user.bio,
+      };
+
+      localStorage.setItem("user", JSON.stringify(this.user));
+      return this.user;
+    },
+
     logout() {
       this.token = null;
       this.user = null;

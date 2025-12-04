@@ -16,7 +16,7 @@ function switchTab(to) {
       <button
         :class="[
           'px-4 py-2',
-          tab === 'login' ? 'border-b-2 border-blue-500 font-semibold' : '',
+          tab === 'login' ? 'border-b-2 border-yellow-500 font-semibold' : '',
         ]"
         @click="switchTab('login')"
       >
@@ -26,7 +26,9 @@ function switchTab(to) {
       <button
         :class="[
           'px-4 py-2',
-          tab === 'register' ? 'border-b-2 border-blue-500 font-semibold' : '',
+          tab === 'register'
+            ? 'border-b-2 border-yellow-500 font-semibold'
+            : '',
         ]"
         @click="switchTab('register')"
       >

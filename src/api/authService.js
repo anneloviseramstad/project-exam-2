@@ -15,4 +15,15 @@ export const authService = {
     });
     return res.data.data;
   },
+  async updateProfile(name, payload, token) {
+    if (!payload || typeof payload !== "object") {
+      throw new Error("Payload must be an object");
+    }
+
+    const res = await api.put(`/holidaze/profiles/${name}`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return res.data.data;
+  },
 };

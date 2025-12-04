@@ -192,6 +192,14 @@ const profileUrl = computed(() =>
             CONTACT
           </RouterLink>
         </li>
+        <li v-if="!userStore.isLoggedIn">
+          <RouterLink
+            to="/auth"
+            class="border rounded-full border-gray-500 px-4 py-2 font-normal"
+          >
+            LOGIN
+          </RouterLink>
+        </li>
       </ul>
     </transition>
   </nav>

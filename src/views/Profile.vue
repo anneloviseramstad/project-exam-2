@@ -88,6 +88,15 @@ async function cancelBooking(bookingId) {
               <p class="text-gray-600">{{ userStore.user.email }}</p>
             </div>
           </div>
+          <div class="mt-4 flex items-center gap-4">
+            <button
+              @click="$router.push({ name: 'EditProfile' })"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Edit Profile
+            </button>
+          </div>
+
           <div v-if="userStore.user.bio">
             <h3 class="text-lg font-medium mb-1">Bio</h3>
             <p>{{ userStore.user.bio }}</p>
