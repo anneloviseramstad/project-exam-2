@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { MapPinIcon } from "@heroicons/vue/24/outline";
+import { MapPinIcon, UserIcon } from "@heroicons/vue/24/outline";
+import { StarIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
   venue: Object,
@@ -26,17 +27,19 @@ function goToVenue() {
         <MapPinIcon class="h-5 w-5 text-gray-500" />
         <p class="text-gray-600 text-sm">{{ venue.location?.city }}</p>
       </div>
-      <div class="flex gap-2 px-4 mt-2 mb-4">
-        <p
-          class="text-gray-600 text-sm px-4 py-1 border border-gray-300 rounded-full"
+      <div class="flex gap-4 px-4 mt-2 mb-4">
+        <div
+          class="flex items-center gap-1 text-gray-600 text-sm px-3 py-1 border border-gray-300 rounded-full"
         >
-          {{ venue.maxGuests }} guests
-        </p>
-        <p
-          class="text-gray-600 text-sm px-4 py-1 border border-gray-300 rounded-full"
+          <UserIcon class="w-4 h-4" />
+          <span>{{ venue.maxGuests }}</span>
+        </div>
+        <div
+          class="flex items-center gap-1 text-gray-600 text-sm px-3 py-1 border border-gray-300 rounded-full"
         >
-          {{ venue.rating }} points
-        </p>
+          <StarIcon class="w-4 h-4 text-yellow-500" />
+          <span>{{ venue.rating }}</span>
+        </div>
       </div>
       <hr class="text-gray-300" />
       <div class="flex justify-between px-4 items-center">
