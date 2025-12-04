@@ -18,7 +18,7 @@ defineProps({
 </script>
 
 <template>
-  <section class="mx-auto max-w-6xl py-4 px-2">
+  <section class="mx-auto max-w-6xl py-4 px-4">
     <h2 class="text-3xl font-medium my-8">
       Handpicked Venues Across the Globe
     </h2>

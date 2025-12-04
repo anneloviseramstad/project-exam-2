@@ -30,7 +30,7 @@ const icons = { CheckIcon, XMarkIcon };
       :src="venue.media?.[0]?.url || '/placeholder.jpg'"
       class="w-full object-cover overflow-hidden h-[30vh] md:h-[50vh]"
     />
-    <div class="container mx-auto mt-8 px-2">
+    <div class="container mx-auto mt-8 px-4">
       <div class="flex flex-col gap-2 items-start">
         <h1>{{ venue.name }}</h1>
         <p class="text-gray-600">
@@ -54,7 +54,7 @@ const icons = { CheckIcon, XMarkIcon };
             <div
               v-for="f in facilities"
               :key="f.key"
-              class="flex items-center gap-1 px-2 py-1 border rounded"
+              class="flex items-center gap-1 px-4 py-1 border rounded"
             >
               <component
                 :is="venue.meta[f.key] ? icons.CheckIcon : icons.XMarkIcon"

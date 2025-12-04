@@ -64,7 +64,7 @@ async function searchVenues() {
 </script>
 
 <template>
-  <div class="mx-auto py-4 max-w-6xl px-2">
+  <div class="mx-auto py-4 max-w-6xl px-4">
     <div
       class="bg-white rounded-2xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-5 gap-4 items-center"
     >
@@ -115,7 +115,7 @@ async function searchVenues() {
           v-model="checkIn"
           type="date"
           :min="new Date().toISOString().split('T')[0]"
-          class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:outline-none shadow-sm hover:shadow-md transition"
+          class="appearance-none w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black shadow-sm hover:shadow-md"
         />
       </div>
       <div class="relative">
@@ -137,7 +137,7 @@ async function searchVenues() {
           v-model="checkOut"
           type="date"
           :min="checkIn || new Date().toISOString().split('T')[0]"
-          class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:outline-none shadow-sm hover:shadow-md transition"
+          class="appearance-none w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black shadow-sm hover:shadow-md"
         />
       </div>
       <div class="relative">

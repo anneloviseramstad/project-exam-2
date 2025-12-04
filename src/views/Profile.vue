@@ -79,7 +79,7 @@ async function cancelBooking(bookingId) {
       />
     </div>
 
-    <div class="container mx-auto my-8 px-2">
+    <div class="container mx-auto my-8 px-4">
       <div>
         <div v-if="!userStore.user">Loading profile...</div>
         <div v-else class="space-y-6">

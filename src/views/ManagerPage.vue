@@ -71,7 +71,7 @@ function formatDate(dateStr) {
       class="w-full h-40 md:h-60 object-cover"
     />
   </div>
-  <div v-if="userStore.user" class="container mx-auto my-8 px-2 space-y-8">
+  <div v-if="userStore.user" class="container mx-auto my-8 px-4 space-y-8">
     <div
       class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
     >

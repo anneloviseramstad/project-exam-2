@@ -21,7 +21,7 @@ onMounted(fetchVenues);
 </script>
 
 <template>
-  <section class="py-8 px-2 max-w-6xl mx-auto">
+  <section class="py-8 px-4 max-w-6xl mx-auto">
     <h2 class="text-3xl font-semibold mb-6 text-center lg:text-left">
       Featured Venues
     </h2>
