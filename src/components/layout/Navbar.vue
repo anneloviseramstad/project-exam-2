@@ -46,7 +46,7 @@ const profileUrl = computed(() =>
     >
       <RouterLink to="/" class="flex items-center gap-2">
         <img src="/src/assets/logo.png" class="h-8 w-auto" />
-        <span class="logo">HOLIDAZE</span>
+        <span class="logo text-gray-900">HOLIDAZE</span>
       </RouterLink>
       <ul class="hidden md:flex gap-8 items-center">
         <li>
