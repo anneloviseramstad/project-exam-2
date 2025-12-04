@@ -97,12 +97,15 @@ async function submitBooking() {
       <label class="font-semibold block mb-1">Guests</label>
       <input type="number" v-model="guests" :max="maxGuests" min="1" required />
     </div>
-    <div class="font-bold text-lg">Total: {{ totalPrice }} NOK</div>
-    <button
-      class="px-4 py-2 bg-blue-600 text-white rounded-md"
-      :disabled="loading || isDateBooked(dateFrom) || isDateBooked(dateTo)"
-    >
-      {{ loading ? "Booking…" : "Book Now" }}
-    </button>
+    <hr class="text-gray-300" />
+    <div class="flex items-center justify-between">
+      <div class="font-semibold text-lg">Total: ${{ totalPrice }}</div>
+      <button
+        class="rounded-full bg-black text-white px-4 py-2 font-medium"
+        :disabled="loading || isDateBooked(dateFrom) || isDateBooked(dateTo)"
+      >
+        {{ loading ? "Booking…" : "BOOK NOW" }}
+      </button>
+    </div>
   </form>
 </template>

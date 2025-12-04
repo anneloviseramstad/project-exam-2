@@ -18,7 +18,10 @@ defineProps({
 </script>
 
 <template>
-  <section class="py-4">
+  <section class="mx-auto max-w-6xl py-4 px-2">
+    <h2 class="text-3xl font-medium my-8">
+      Handpicked Venues Across the Globe
+    </h2>
     <div v-if="loading" class="flex justify-center items-center py-8">
       <div
         class="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"

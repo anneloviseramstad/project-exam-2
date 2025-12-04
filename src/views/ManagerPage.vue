@@ -43,9 +43,8 @@ async function deleteVenue(id) {
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-8">
+  <div class="max-w-6xl mx-auto bg-white rounded space-y-8">
     <h1 class="text-3xl font-bold">Manager Dashboard</h1>
-
     <div class="flex justify-end">
       <router-link
         to="/manager-only/create"
@@ -54,13 +53,10 @@ async function deleteVenue(id) {
         Add New Venue
       </router-link>
     </div>
-
     <div v-if="loading" class="text-gray-600">Loading venues...</div>
-
     <div v-else-if="venues.length === 0" class="text-gray-600">
       You have no venues yet.
     </div>
-
     <ul v-else class="space-y-4">
       <li
         v-for="venue in venues"
@@ -78,7 +74,6 @@ async function deleteVenue(id) {
             <p class="text-gray-500">{{ venue.location?.city }}</p>
           </div>
         </div>
-
         <div class="flex gap-4 mt-3 md:mt-0">
           <router-link
             :to="`/manager-only/edit/${venue.id}`"

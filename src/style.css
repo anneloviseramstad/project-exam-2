@@ -46,7 +46,7 @@ body {
 
 @layer base {
   h1 {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 2rem;
     font-weight: 500;
   }
@@ -61,8 +61,8 @@ body {
 
   .logo {
     font-family: "Bodoni Moda", serif;
-    font-size: 2.5rem;
-    font-weight: 400;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
 
   button {
@@ -71,6 +71,8 @@ body {
 
   li {
     list-style: none;
+    font-weight: 300;
+    letter-spacing: 0cap;
   }
 }
 
@@ -90,11 +92,10 @@ body {
 }
 
 .nav,
-.navbar,
-.container {
-  max-width: fit-content;
+.navbar {
   margin-left: auto;
   margin-right: auto;
+  padding: 1rem;
 }
 
 .card {
@@ -117,13 +118,4 @@ body {
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
-}
-
-@media screen {
-  .nav,
-  .navbar,
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
 }

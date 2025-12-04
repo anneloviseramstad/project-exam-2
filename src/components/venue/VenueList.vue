@@ -11,7 +11,7 @@ const error = ref(null);
 const uiStore = useUiStore();
 const currentPage = ref(1);
 const totalPages = ref(1);
-const limit = 10;
+const limit = 12;
 
 async function fetchVenues(page = 1) {
   loading.value = true;

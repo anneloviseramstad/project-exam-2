@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const venueService = {
-  async getAllVenues(page = 1, limit = 10, includeBookings = false) {
+  async getAllVenues(page = 1, limit = 12, includeBookings = false) {
     const bookingsParam = includeBookings ? "&_bookings=true" : "";
     const response = await api.get(
       `/holidaze/venues?sort=created&sortOrder=desc&limit=${limit}&page=${page}${bookingsParam}`

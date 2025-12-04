@@ -64,45 +64,118 @@ async function searchVenues() {
 </script>
 
 <template>
-  <div class="mx-auto py-4">
+  <div class="mx-auto py-4 max-w-6xl px-2">
     <div
-      class="grid grid-cols-1 md:grid-cols-5 gap-4 bg-gray-50 p-4 rounded-lg shadow"
+      class="bg-white rounded-2xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-5 gap-4 items-center"
     >
-      <input
-        v-model="location"
-        type="text"
-        placeholder="Where to?"
-        class="bg-secondary p-2"
-      />
-      <input
-        v-model="checkIn"
-        type="date"
-        placeholder="Check in"
-        class="bg-secondary p-2"
-      />
-      <input
-        v-model="checkOut"
-        type="date"
-        placeholder="Check out"
-        class="bg-secondary p-2"
-      />
-      <input
-        v-model.number="guests"
-        type="number"
-        min="1"
-        placeholder="Guests"
-        class="bg-secondary p-2"
-      />
+      <div class="relative">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 11c0 1.105-.895 2-2 2s-2-.895-2-2 .895-2 2-2 2 .895 2 2z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+          />
+        </svg>
+        <input
+          v-model="location"
+          type="text"
+          placeholder="Where to?"
+          class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:outline-none shadow-sm hover:shadow-md transition"
+        />
+      </div>
+      <div class="relative">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+        <input
+          v-model="checkIn"
+          type="date"
+          :min="new Date().toISOString().split('T')[0]"
+          class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:outline-none shadow-sm hover:shadow-md transition"
+        />
+      </div>
+      <div class="relative">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+        <input
+          v-model="checkOut"
+          type="date"
+          :min="checkIn || new Date().toISOString().split('T')[0]"
+          class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:outline-none shadow-sm hover:shadow-md transition"
+        />
+      </div>
+      <div class="relative">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5.121 17.804A5 5 0 0112 15a5 5 0 016.879 2.804M12 12a5 5 0 100-10 5 5 0 000 10z"
+          />
+        </svg>
+        <input
+          v-model.number="guests"
+          type="number"
+          min="1"
+          placeholder="Guests"
+          class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:outline-none shadow-sm hover:shadow-md transition"
+        />
+      </div>
       <button
         @click="searchVenues"
         :disabled="loading"
-        class="bg-black text-white font-semibold rounded-full p-2 hover:bg-gray-500 transition hover:cursor-pointer"
+        class="bg-gray-900 text-white font-semibold rounded-full py-3 px-6 hover:bg-gray-800 transition shadow-md hover:shadow-lg"
       >
         {{ loading ? "Searching..." : "Search" }}
       </button>
     </div>
     <p v-if="error" class="text-red-500 mt-4">{{ error }}</p>
-    <div v-if="results.length" class="mt-6 grid grid-cols-2 gap-4">
+    <div
+      v-if="results.length"
+      class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
       <VenueCard v-for="venue in results" :key="venue.id" :venue="venue" />
     </div>
     <p
