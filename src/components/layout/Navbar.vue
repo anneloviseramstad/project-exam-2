@@ -200,6 +200,18 @@ const profileUrl = computed(() =>
             LOGIN
           </RouterLink>
         </li>
+        <template v-else>
+          <li>
+            <RouterLink :to="profileUrl">
+              <UserIcon class="w-6 h-6" />
+            </RouterLink>
+          </li>
+          <li>
+            <button @click="logout" class="border border-white px-4 py-2">
+              LOG OUT
+            </button>
+          </li>
+        </template>
       </ul>
     </transition>
   </nav>
