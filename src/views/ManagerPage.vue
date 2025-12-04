@@ -119,9 +119,9 @@ function formatDate(dateStr) {
         <li
           v-for="venue in venues"
           :key="venue.id"
-          class="flex flex-col md:flex-row justify-between items-start md:items-center shadow-sm p-4 rounded bg-white"
+          class="flex flex-col justify-between items-start border-l-3 border-gray-300 p-4"
         >
-          <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex flex-col gap-4">
             <img
               :src="venue.media?.[0]?.url || '/placeholder.jpg'"
               :alt="venue.name"
@@ -132,9 +132,7 @@ function formatDate(dateStr) {
               <p class="text-gray-500">{{ venue.location?.city }}</p>
             </div>
           </div>
-          <div
-            class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mt-3 md:mt-0"
-          >
+          <div class="flex flex-col gap-2 pt-4 md:mt-0">
             <router-link
               :to="`/manager-only/edit/${venue.id}`"
               class="text-black hover:text-yellow-800 font-semibold"

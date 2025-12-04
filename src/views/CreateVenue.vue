@@ -103,6 +103,7 @@ async function handleCreateVenue() {
   <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-6">
     <h1 class="text-2xl font-bold mb-4">Create Venue</h1>
     <form @submit.prevent="handleCreateVenue" class="space-y-4">
+      <label>Venue Name</label>
       <input
         v-model="name"
         type="text"
@@ -112,6 +113,7 @@ async function handleCreateVenue() {
       <p v-if="fieldErrors.name" class="text-red-500 text-sm">
         {{ fieldErrors.name }}
       </p>
+      <label>Description</label>
 
       <textarea
         v-model="description"
@@ -121,6 +123,8 @@ async function handleCreateVenue() {
       <p v-if="fieldErrors.description" class="text-red-500 text-sm">
         {{ fieldErrors.description }}
       </p>
+      <label>Price / night</label>
+
       <input
         v-model.number="price"
         type="number"
@@ -130,6 +134,7 @@ async function handleCreateVenue() {
       <p v-if="fieldErrors.price" class="text-red-500 text-sm">
         {{ fieldErrors.price }}
       </p>
+      <label>Max Guests</label>
 
       <input
         v-model.number="maxGuests"

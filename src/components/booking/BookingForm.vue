@@ -74,42 +74,66 @@ async function submitBooking() {
 </script>
 
 <template>
-  <form class="space-y-4" @submit.prevent="submitBooking">
-    <div>
-      <label class="font-semibold block mb-1">Check-in</label>
-      <input
-        type="date"
-        v-model="dateFrom"
-        :class="isDateBooked(dateFrom) ? 'bg-red-100' : ''"
-        :min="new Date().toISOString().split('T')[0]"
-        required
-      />
-      <p v-if="dateFrom && isDateBooked(dateFrom)" class="text-red-600 text-sm">
-        This date is already booked
-      </p>
-    </div>
-    <div>
-      <label class="font-semibold block mb-1">Check-out</label>
-      <input
-        type="date"
-        v-model="dateTo"
-        :class="isDateBooked(dateTo) ? 'bg-red-100' : ''"
-        :min="dateFrom || new Date().toISOString().split('T')[0]"
-        required
-      />
-      <p v-if="dateTo && isDateBooked(dateTo)" class="text-red-600 text-sm">
-        This date is already booked
-      </p>
+  <form class="space-y-4 bg-white" @submit.prevent="submitBooking">
+    <div class="flex flex-col gap-2">
+      <div class="flex-1 mb-4 sm:mb-0">
+        <label class="font-semibold block mb-1">Check-in</label>
+        <input
+          type="date"
+          v-model="dateFrom"
+          :class="[
+            'w-full px-3 py-2 border rounded-xl focus:outline-none',
+            isDateBooked(dateFrom) ? 'bg-red-100' : 'bg-white',
+          ]"
+          :min="new Date().toISOString().split('T')[0]"
+          required
+        />
+        <p
+          v-if="dateFrom && isDateBooked(dateFrom)"
+          class="text-red-600 text-sm mt-1"
+        >
+          This date is already booked
+        </p>
+      </div>
+      <div class="flex-1">
+        <label class="font-semibold block mb-1">Check-out</label>
+        <input
+          type="date"
+          v-model="dateTo"
+          :class="[
+            'w-full px-3 py-2 border rounded-xl focus:outline-none',
+            isDateBooked(dateTo) ? 'bg-red-100' : 'bg-white',
+          ]"
+          :min="dateFrom || new Date().toISOString().split('T')[0]"
+          required
+        />
+        <p
+          v-if="dateTo && isDateBooked(dateTo)"
+          class="text-red-600 text-sm mt-1"
+        >
+          This date is already booked
+        </p>
+      </div>
     </div>
     <div>
       <label class="font-semibold block mb-1">Guests</label>
-      <input type="number" v-model="guests" :max="maxGuests" min="1" required />
+      <input
+        type="number"
+        v-model="guests"
+        :max="maxGuests"
+        min="1"
+        class="w-full px-3 py-2 border rounded-xl focus:outline-none"
+        required
+      />
     </div>
-    <hr class="text-gray-300" />
-    <div class="flex items-center justify-between">
+    <hr class="text-gray-300 my-2" />
+    <div
+      class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
+    >
       <div class="font-semibold text-lg">Total: ${{ totalPrice }}</div>
       <button
-        class="rounded-full bg-gray-900 text-white px-4 py-2 font-medium"
+        type="submit"
+        class="w-full sm:w-auto rounded-full bg-gray-900 text-white px-6 py-3 font-medium hover:bg-gray-800 transition"
         :disabled="
           loading ||
           !userStore.isLoggedIn ||
