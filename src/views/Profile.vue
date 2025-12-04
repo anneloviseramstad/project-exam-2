@@ -25,6 +25,12 @@ function formatDate(dateStr) {
   });
 }
 
+function calculateNights(from, to) {
+  const start = new Date(from);
+  const end = new Date(to);
+  return (end - start) / (1000 * 60 * 60 * 24);
+}
+
 onMounted(async () => {
   if (!userStore.isLoggedIn) return router.push("/auth?tab=login");
 
@@ -91,7 +97,7 @@ async function cancelBooking(bookingId) {
           <div class="mt-4 flex items-center gap-4">
             <button
               @click="$router.push({ name: 'EditProfile' })"
-              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              class="px-4 py-2 bg-black rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
             >
               Edit Profile
             </button>
@@ -164,7 +170,13 @@ async function cancelBooking(bookingId) {
               </div>
               <div class="flex items-center gap-1 font-semibold">
                 <CurrencyDollarIcon class="w-5 h-5" />
-                <span>{{ booking.venue.price * booking.guests }} NOK</span>
+                <span
+                  >{{
+                    calculateNights(booking.dateFrom, booking.dateTo) *
+                    booking.venue.price
+                  }}
+                  NOK</span
+                >
               </div>
             </div>
             <button
