@@ -38,7 +38,7 @@ const icons = { CheckIcon, XMarkIcon };
         </p>
       </div>
       <div
-        class="flex flex-col md:flex-row md:items-center gap-12 md:gap-20 items-start mt-8 md:mt-12"
+        class="flex flex-col md:flex-row gap-12 md:gap-20 items-start mt-8 md:mt-12"
       >
         <div class="md:w-1/2 space-y-12">
           <p class="font-bold mb-2">Description:</p>
