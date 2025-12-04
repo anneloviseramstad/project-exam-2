@@ -26,7 +26,14 @@ onMounted(async () => {
 
   loading.value = true;
   try {
-    venues.value = await venueService.getVenuesByProfile(userStore.username);
+    const rawVenues = await venueService.getVenuesByProfile(userStore.username);
+
+    venues.value = await Promise.all(
+      rawVenues.map(async (v) => {
+        const fullVenue = await venueService.getVenueWithBookings(v.id);
+        return fullVenue;
+      })
+    );
   } catch (err) {
     uiStore.setError("Failed to load venues");
   } finally {
@@ -45,6 +52,14 @@ async function deleteVenue(id) {
   } catch (err) {
     uiStore.setError("Failed to delete venue");
   }
+}
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString("no-NO", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 </script>
 
@@ -77,13 +92,13 @@ async function deleteVenue(id) {
       <div class="flex gap-4">
         <button
           @click="$router.push({ name: 'EditProfile' })"
-          class="px-4 py-2 bg-black rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
+          class="px-4 py-2 bg-gray-900 rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
         >
           Edit Profile
         </button>
         <router-link
           to="/manager-only/create"
-          class="px-4 py-2 bg-white border border-gray-400 text-black font-medium rounded-full hover:bg-black hover:text-white"
+          class="px-4 py-2 bg-white border border-gray-400 text-black font-medium rounded-full hover:bg-gray-900 hover:text-white"
         >
           + Add New Venue
         </router-link>
@@ -117,7 +132,9 @@ async function deleteVenue(id) {
               <p class="text-gray-500">{{ venue.location?.city }}</p>
             </div>
           </div>
-          <div class="flex gap-4 mt-3 md:mt-0">
+          <div
+            class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mt-3 md:mt-0"
+          >
             <router-link
               :to="`/manager-only/edit/${venue.id}`"
               class="text-black hover:text-yellow-800 font-semibold"
@@ -125,11 +142,26 @@ async function deleteVenue(id) {
               Edit
             </router-link>
             <button
-              class="text-red-600 hover:text-red-800 font-semibold"
+              class="text-red-600 hover:text-red-800 font-semibold text-left"
               @click="deleteVenue(venue.id)"
             >
               Delete
             </button>
+            <div v-if="venue.bookings?.length" class="mt-3 text-sm">
+              <h4 class="font-medium mb-1">Upcoming bookings:</h4>
+              <ul class="space-y-1">
+                <li v-for="b in venue.bookings" :key="b.id">
+                  <span
+                    >{{ formatDate(b.dateFrom) }} →
+                    {{ formatDate(b.dateTo) }}</span
+                  >
+                  ({{ b.guests }} guests)
+                </li>
+              </ul>
+            </div>
+            <div v-else class="mt-3 text-sm text-gray-500">
+              No bookings yet.
+            </div>
           </div>
         </li>
       </ul>

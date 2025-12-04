@@ -71,7 +71,7 @@ async function handleLogin() {
     <button
       type="submit"
       :disabled="loading"
-      class="px-6 py-2 bg-black text-white rounded-full"
+      class="px-6 py-2 bg-gray-900 text-white rounded-full"
     >
       {{ loading ? "Logging in..." : "Login" }}
     </button>

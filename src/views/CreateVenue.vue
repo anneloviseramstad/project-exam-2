@@ -195,13 +195,17 @@ async function handleCreateVenue() {
           Remove
         </button>
       </div>
-      <button type="button" @click="addMediaField" class="text-primary-500">
+      <button
+        type="button"
+        @click="addMediaField"
+        class="text-white bg-gray-900 rounded-full px-4 md:px-6 py-2"
+      >
         Add Image
       </button>
       <button
         type="submit"
         :disabled="loading"
-        class="px-6 py-2 bg-primary-500 text-black rounded mt-4"
+        class="px-4 md:px-6 py-2 border rounded-full text-black rounded mt-4 mx-2"
       >
         {{ loading ? "Creating..." : "Create Venue" }}
       </button>

@@ -109,7 +109,7 @@ async function submitBooking() {
     <div class="flex items-center justify-between">
       <div class="font-semibold text-lg">Total: ${{ totalPrice }}</div>
       <button
-        class="rounded-full bg-black text-white px-4 py-2 font-medium"
+        class="rounded-full bg-gray-900 text-white px-4 py-2 font-medium"
         :disabled="
           loading ||
           !userStore.isLoggedIn ||

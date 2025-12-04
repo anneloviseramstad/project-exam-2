@@ -55,8 +55,8 @@ const profileUrl = computed(() =>
             class="pb-1"
             :class="
               route.path.startsWith('/venues')
-                ? 'border-b-2 border-primary text-primary'
-                : 'hover:text-primary'
+                ? 'border-b-2 border-gray-400'
+                : 'hover:text-gray-300'
             "
           >
             BROWSE VENUES
@@ -68,8 +68,8 @@ const profileUrl = computed(() =>
             class="pb-1"
             :class="
               route.path === '/about'
-                ? 'border-b-2 border-primary text-primary'
-                : 'hover:text-primary'
+                ? 'border-b-2 border-gray-400'
+                : 'hover:text-gray-300'
             "
           >
             ABOUT US
@@ -81,8 +81,8 @@ const profileUrl = computed(() =>
             class="pb-1"
             :class="
               route.path === '/contact'
-                ? 'border-b-2 border-primary text-primary'
-                : 'hover:text-primary'
+                ? 'border-b-2 border-gray-400'
+                : 'hover:text-gray-300'
             "
           >
             CONTACT
@@ -159,8 +159,8 @@ const profileUrl = computed(() =>
             @click="closeMenu"
             :class="
               route.path.startsWith('/venues')
-                ? 'border-b-2 border-primary text-primary'
-                : 'hover:text-primary'
+                ? 'border-b-2 border-gray-400'
+                : 'hover:text-gray-300'
             "
           >
             BROWSE VENUES
@@ -172,8 +172,8 @@ const profileUrl = computed(() =>
             @click="closeMenu"
             :class="
               route.path === '/about'
-                ? 'border-b-2 border-primary text-primary'
-                : 'hover:text-primary'
+                ? 'border-b-2 border-gray-400'
+                : 'hover:text-gray-300'
             "
           >
             ABOUT US
@@ -185,8 +185,8 @@ const profileUrl = computed(() =>
             @click="closeMenu"
             :class="
               route.path === '/contact'
-                ? 'border-b-2 border-primary text-primary'
-                : 'hover:text-primary'
+                ? 'border-b-2 border-gray-400'
+                : 'hover:text-gray-300'
             "
           >
             CONTACT
@@ -202,7 +202,7 @@ const profileUrl = computed(() =>
         </li>
         <template v-else>
           <li>
-            <RouterLink :to="profileUrl">
+            <RouterLink :to="profileUrl" @click="closeMenu">
               <UserIcon class="w-6 h-6" />
             </RouterLink>
           </li>

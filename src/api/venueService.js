@@ -35,4 +35,10 @@ export const venueService = {
     const response = await api.delete(`/holidaze/venues/${id}`);
     return response.data.data;
   },
+  async getVenueWithBookings(id) {
+    const response = await api.get(
+      `/holidaze/venues/${id}?_bookings=true&_owner=true`
+    );
+    return response.data.data;
+  },
 };

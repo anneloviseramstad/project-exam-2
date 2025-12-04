@@ -114,7 +114,7 @@ async function handleRegister() {
     <button
       type="submit"
       :disabled="loading"
-      class="w-full px-6 py-2 bg-black text-white rounded-full"
+      class="w-full px-6 py-2 bg-gray-900 text-white rounded-full"
     >
       {{ loading ? "Registering..." : "Register" }}
     </button>

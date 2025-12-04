@@ -97,7 +97,7 @@ async function cancelBooking(bookingId) {
           <div class="mt-4 flex items-center gap-4">
             <button
               @click="$router.push({ name: 'EditProfile' })"
-              class="px-4 py-2 bg-black rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
+              class="px-4 py-2 bg-gray-900 rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
             >
               Edit Profile
             </button>
