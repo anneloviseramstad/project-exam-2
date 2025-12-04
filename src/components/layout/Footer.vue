@@ -1,15 +1,15 @@
 <template>
   <footer class="text-base mb-4">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex justify-between items-center py-8">
-        <div class="flex flex-col gap-2">
+    <div class="max-w-7xl">
+      <div class="flex flex-col items-center py-8">
+        <div class="flex flex-col text-center gap-2">
           <img src="/src/assets/logo.png" class="w-8 h-10" />
           <p class="logo">holidaze</p>
           <p class="text-gray-400 text-base">
             The easiest way to book your stay.
           </p>
         </div>
-        <div class="flex justify-end gap-12">
+        <div class="flex justify-end gap-40">
           <div>
             <h4>Quick Links</h4>
             <ul>

@@ -1,81 +1,25 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import { venueService } from "../../api/venueService";
-
-const venues = ref([]);
-const currentIndex = ref(0);
-const loading = ref(false);
-const error = ref("");
-
-async function fetchVenues() {
-  loading.value = true;
-  error.value = "";
-  try {
-    const response = await venueService.getAllVenues(1, 5);
-    const data = response.data || [];
-    venues.value = data.filter(
-      (v) => Array.isArray(v.media) && v.media.length > 0
-    );
-
-    currentIndex.value = 0;
-  } catch (err) {
-    console.error(err);
-    error.value = "Kunne ikke hente venues.";
-    venues.value = [];
-    currentIndex.value = 0;
-  } finally {
-    loading.value = false;
-  }
-}
-
-function nextVenue() {
-  if (!venues.value.length) return;
-  currentIndex.value = (currentIndex.value + 1) % venues.value.length;
-}
-
-function prevVenue() {
-  if (!venues.value.length) return;
-  currentIndex.value =
-    (currentIndex.value - 1 + venues.value.length) % venues.value.length;
-}
-
-onMounted(fetchVenues);
-</script>
-
 <template>
   <header
-    class="relative mx-auto max-w-6xl h-[30vh] md:h-[50vh] bg-center bg-cover flex items-center justify-center rounded-3xl shadow"
-    :style="`background-image: url('${
-      venues[currentIndex]?.media?.[0]?.url || '/placeholder.jpg'
-    }')`"
+    class="relative h-[50vh] md:h-[60vh] bg-cover bg-center shadow flex items-center"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1554205163-beedc3a3e9fd?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    "
   >
-    <div class="absolute inset-0 bg-black/70 rounded-3xl"></div>
-    <div
-      class="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer text-white text-3xl"
-      @click="prevVenue"
-    >
-      &#10094;
-    </div>
-    <div
-      class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-white text-3xl"
-      @click="nextVenue"
-    >
-      &#10095;
-    </div>
-    <div class="flex flex-col gap-4 max-w-200 text-center z-10 px-4">
-      <h1 class="text-white text-3xl md:text-5xl font-bold">
-        {{ venues[currentIndex]?.name || "" }}
-      </h1>
-      <p v-if="venues[currentIndex]" class="hidden md:block text-white mt-2">
-        {{ venues[currentIndex]?.location.country || "" }},
-        {{ venues[currentIndex]?.location.city || "" }}
-      </p>
-      <div v-if="loading" class="flex justify-center items-center py-8">
-        <div
-          class="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"
-        ></div>
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative mx-auto max-w-7xl w-full px-4 md:px-8 pt-32">
+      <div class="max-w-[500px] flex flex-col gap-4">
+        <h1 class="text-white text-4xl md:text-5xl font-medium leading-tight">
+          Explore the Hidden Corners of the World
+        </h1>
+
+        <p class="text-white text-lg md:text-xl">
+          Find your perfect location for events, meetings, and adventures.
+        </p>
+
+        <button class="btn my-8 w-fit" @click="$router.push('/venues')">
+          GET STARTED
+        </button>
       </div>
-      <p v-else-if="error" class="text-red-500">{{ error }}</p>
     </div>
   </header>
 </template>

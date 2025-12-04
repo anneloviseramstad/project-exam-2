@@ -1,26 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
 html,
 body {
   height: 100%;
   margin: 0;
-}
-
-body {
-  color: #1f1f1f;
-  margin: 0;
   padding: 0;
   line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  background-color: #ffffff;
+  color: #1f1f1f;
+  font-family: "Inter", sans-serif;
 }
 
 #app {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  min-height: 100vh;
 }
 
 .loader {
@@ -29,6 +24,15 @@ body {
   width: 48px;
   height: 48px;
   animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .fade-enter-active,
@@ -40,76 +44,86 @@ body {
   opacity: 0;
 }
 
-@theme {
-  --font-heading: "Montserrat", sans-serif;
-  --font-base: "Inter", sans-serif;
-
-  --color-primary: #b98801;
-  --color-dark: #1f1f1f;
-  --color-secondary: #eeeeee;
-  --color-primary-hover: #5c5445;
-  --color-primary-light: #ffffff;
-
-  --color-text-primary: #1f1f1f;
-  --color-text-secondary: #676767;
-}
-
 @layer base {
   h1 {
-    @apply text-3xl font-heading font-medium;
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
   }
-  h2 {
-    @apply text-lg font-heading;
-  }
-  h3 {
-    @apply text-lg font-heading font-medium;
-  }
-  h4 {
-    @apply text-base font-heading font-semibold;
-  }
+
+  h2,
+  h3,
+  h4,
   p {
-    @apply font-base text-lg;
+    font-family: "Inter", sans-serif;
+    margin: 0;
   }
+
+  .logo {
+    font-family: "Bodoni Moda", serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+  }
+
   button {
-    @apply cursor-pointer;
+    cursor: pointer;
   }
+
   li {
-    @apply list-none;
+    list-style: none;
   }
 }
 
-@layer components {
-  .nav {
-    @apply max-w-7xl mx-auto px-2 md:px-4 lg:px-8;
-  }
+.btn {
+  color: black;
+  background: white;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  border-radius: 8rem;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.nav,
+.navbar,
+.container {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  transition: transform 0.3s;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.input {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+}
+
+@media screen {
+  .nav,
+  .navbar,
   .container {
-    @apply max-w-7xl mx-auto px-2 py-8 sm:py-12;
-  }
-  .navbar {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-  .card {
-    @apply transition-transform duration-300 overflow-hidden rounded-lg transform;
-  }
-  .card:hover {
-    @apply scale-105 cursor-pointer;
-  }
-  .card-img {
-    @apply w-full h-[200px] object-cover rounded-lg;
-  }
-  .logo {
-    @apply text-3xl font-medium font-heading;
-  }
-  .btn {
-    @apply bg-primary text-white font-semibold font-heading py-2 px-4 cursor-pointer text-center;
-  }
-  .btn:hover {
-    @apply bg-primary-hover;
-  }
-  .button:hover {
-    @apply cursor-pointer;
-  }
-  .input {
-    @apply border;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

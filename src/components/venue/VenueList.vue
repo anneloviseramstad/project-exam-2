@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import VenuesListView from "./VenuesListView.vue";
 import { venueService } from "../../api/venueService";
 import { useUiStore } from "../../store/ui";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/vue/24/outline";
 
 const venues = ref([]);
 const loading = ref(true);
@@ -39,21 +40,26 @@ function goToPage(page) {
 
 <template>
   <VenuesListView :venues="venues" :loading="loading" :error="error" />
-  <div v-if="totalPages > 1" class="flex justify-center gap-2 mt-4">
+
+  <div v-if="totalPages > 1" class="flex justify-center gap-2 mt-12">
     <button
       @click="goToPage(currentPage - 1)"
       :disabled="currentPage === 1"
-      class="px-3 py-1 border rounded"
+      class="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full disabled:opacity-50"
     >
-      Prev
+      <ArrowLeftIcon class="w-5 h-5" />
     </button>
-    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+    <span class="flex items-center"
+      >Page {{ currentPage }} of {{ totalPages }}</span
+    >
+
     <button
       @click="goToPage(currentPage + 1)"
       :disabled="currentPage === totalPages"
-      class="px-3 py-1 border rounded"
+      class="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full disabled:opacity-50"
     >
-      Next
+      <ArrowRightIcon class="w-5 h-5" />
     </button>
   </div>
 </template>

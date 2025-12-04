@@ -10,9 +10,7 @@ import UiNotification from "./components/global/UiNotification.vue";
     <Navbar />
     <Loader />
     <UiNotification />
-    <main class="md:pt-18 flex-1">
-      <router-view />
-    </main>
-    <Footer class="mt-auto" />
+    <router-view />
+    <Footer />
   </div>
 </template>
