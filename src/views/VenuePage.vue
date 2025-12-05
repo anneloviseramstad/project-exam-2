@@ -2,7 +2,7 @@
 import { ref, onMounted, reactive } from "vue";
 import { venueService } from "../api/venueService";
 import BookingForm from "../components/booking/BookingForm.vue";
-import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+import { CheckIcon, XMarkIcon, StarIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
   id: String,
@@ -31,8 +31,14 @@ const icons = { CheckIcon, XMarkIcon };
       class="w-full object-cover overflow-hidden h-[30vh] md:h-[50vh]"
     />
     <div class="container mx-auto mt-8 px-4">
-      <div class="flex flex-col gap-2 items-start">
-        <h1>{{ venue.name }}</h1>
+      <div class="flex flex-col">
+        <div class="flex flex-row items-center justify-between">
+          <h1>{{ venue.name }}</h1>
+          <div class="flex items-center gap-1 text-gray-600 text-sm px-3 py-1">
+            <StarIcon class="w-4 h-4 text-yellow-500" />
+            <span>{{ venue.rating }}</span>
+          </div>
+        </div>
         <p class="text-gray-600">
           {{ venue.location.city }}, {{ venue.location.country }}
         </p>
@@ -65,7 +71,7 @@ const icons = { CheckIcon, XMarkIcon };
             </div>
           </div>
         </div>
-        <div class="w-full md:w-1/2 p-6 bg-white shadow-xl rounded-lg">
+        <div class="w-full md:w-1/2 p-4 bg-white shadow-xl rounded-lg">
           <BookingForm
             :venueId="venue.id"
             :price="venue.price"

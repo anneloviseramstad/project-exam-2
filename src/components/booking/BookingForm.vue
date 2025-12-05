@@ -82,7 +82,7 @@ async function submitBooking() {
           type="date"
           v-model="dateFrom"
           :class="[
-            'w-full px-3 py-2 border rounded-xl focus:outline-none',
+            'w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none',
             isDateBooked(dateFrom) ? 'bg-red-100' : 'bg-white',
           ]"
           :min="new Date().toISOString().split('T')[0]"
@@ -101,7 +101,7 @@ async function submitBooking() {
           type="date"
           v-model="dateTo"
           :class="[
-            'w-full px-3 py-2 border rounded-xl focus:outline-none',
+            'w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none',
             isDateBooked(dateTo) ? 'bg-red-100' : 'bg-white',
           ]"
           :min="dateFrom || new Date().toISOString().split('T')[0]"
@@ -122,7 +122,7 @@ async function submitBooking() {
         v-model="guests"
         :max="maxGuests"
         min="1"
-        class="w-full px-3 py-2 border rounded-xl focus:outline-none"
+        class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none"
         required
       />
     </div>
@@ -133,7 +133,7 @@ async function submitBooking() {
       <div class="font-semibold text-lg">Total: ${{ totalPrice }}</div>
       <button
         type="submit"
-        class="w-full sm:w-auto rounded-full bg-gray-900 text-white px-6 py-3 font-medium hover:bg-gray-800 transition"
+        class="w-full sm:w-auto rounded-full bg-gray-900 text-white px-6 py-3 font-medium hover:bg-gray-800 transition mt-4"
         :disabled="
           loading ||
           !userStore.isLoggedIn ||

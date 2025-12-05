@@ -44,7 +44,7 @@ const profileUrl = computed(() =>
     <div
       class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center font-base font-extralight"
     >
-      <RouterLink to="/" class="flex items-center gap-2">
+      <RouterLink to="/" @click="closeMenu" class="flex items-center gap-2">
         <img src="/src/assets/logo.png" class="h-8 w-auto" />
         <span class="logo text-gray-900">HOLIDAZE</span>
       </RouterLink>
