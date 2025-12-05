@@ -175,8 +175,7 @@ async function cancelBooking(bookingId) {
                     calculateNights(booking.dateFrom, booking.dateTo) *
                     booking.venue.price
                   }}
-                  NOK</span
-                >
+                </span>
               </div>
             </div>
             <button
