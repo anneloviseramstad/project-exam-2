@@ -152,26 +152,31 @@ async function handleCreateVenue() {
         {{ fieldErrors.maxGuests }}
       </p>
       <h2 class="font-semibold mt-4">Location</h2>
+      <label for="address">Address</label>
       <input
         v-model="location.address"
         placeholder="Address"
         class="w-full p-2 border rounded"
       />
+      <label for="city">City</label>
       <input
         v-model="location.city"
         placeholder="City"
         class="w-full p-2 border rounded"
       />
+      <label for="zipCode">ZIP Code</label>
       <input
         v-model="location.zip"
         placeholder="ZIP"
         class="w-full p-2 border rounded"
       />
+      <label for="country">Country</label>
       <input
         v-model="location.country"
         placeholder="Country"
         class="w-full p-2 border rounded"
       />
+      <label for="continent">Continent</label>
       <input
         v-model="location.continent"
         placeholder="Continent"
@@ -188,12 +193,14 @@ async function handleCreateVenue() {
       </div>
       <h2 class="font-semibold mt-4">Media</h2>
       <div v-for="(m, index) in media" :key="index" class="space-y-2">
+        <label for="imageUrl">Image Url</label>
         <input
           v-model="m.url"
           type="url"
           placeholder="Image URL"
           class="w-full p-2 border rounded"
         />
+        <label for="imageAltText">Image Alt Text</label>
         <input
           v-model="m.alt"
           type="text"

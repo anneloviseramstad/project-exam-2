@@ -164,6 +164,8 @@ async function handleEditVenue() {
   <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-6">
     <h1 class="text-2xl font-bold mb-4">Edit Venue</h1>
     <form @submit.prevent="handleEditVenue" class="space-y-4">
+      <h2 class="font-semibold mt-4">Venue Details</h2>
+      <label for="name">Venue Name</label>
       <input
         v-model="name"
         type="text"
@@ -173,6 +175,7 @@ async function handleEditVenue() {
       <p v-if="fieldErrors.name" class="text-red-500 text-sm">
         {{ fieldErrors.name }}
       </p>
+      <label for="description">Description</label>
       <textarea
         v-model="description"
         placeholder="Description"
@@ -181,6 +184,7 @@ async function handleEditVenue() {
       <p v-if="fieldErrors.description" class="text-red-500 text-sm">
         {{ fieldErrors.description }}
       </p>
+      <label for="price">Price / night</label>
       <input
         v-model.number="price"
         type="number"
@@ -190,6 +194,7 @@ async function handleEditVenue() {
       <p v-if="fieldErrors.price" class="text-red-500 text-sm">
         {{ fieldErrors.price }}
       </p>
+      <label for="maxGuests">Max Guests</label>
       <input
         v-model.number="maxGuests"
         type="number"
@@ -200,26 +205,31 @@ async function handleEditVenue() {
         {{ fieldErrors.maxGuests }}
       </p>
       <h2 class="font-semibold mt-4">Location</h2>
+      <label for="address">Address</label>
       <input
         v-model="location.address"
         placeholder="Address"
         class="w-full p-2 border rounded"
       />
+      <label for="city">City</label>
       <input
         v-model="location.city"
         placeholder="City"
         class="w-full p-2 border rounded"
       />
+      <label for="zipcode">ZIP Code</label>
       <input
         v-model="location.zip"
         placeholder="ZIP"
         class="w-full p-2 border rounded"
       />
+      <label for="country">Country</label>
       <input
         v-model="location.country"
         placeholder="Country"
         class="w-full p-2 border rounded"
       />
+      <label for="continent">Continent</label>
       <input
         v-model="location.continent"
         placeholder="Continent"
@@ -236,12 +246,14 @@ async function handleEditVenue() {
       </div>
       <h2 class="font-semibold mt-4">Media</h2>
       <div v-for="(m, index) in media" :key="index" class="space-y-2">
+        <label for="imageUrl">Image Url</label>
         <input
           v-model="m.url"
           type="url"
           placeholder="Image URL"
           class="w-full p-2 border rounded"
         />
+        <label for="imageAltText">Image Alt Text</label>
         <input
           v-model="m.alt"
           type="text"

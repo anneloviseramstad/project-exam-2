@@ -8,9 +8,9 @@
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="relative mx-auto max-w-6xl w-full px-4 md:px-8 pt-32">
       <div class="max-w-[500px] flex flex-col gap-4">
-        <h1 class="text-white text-4xl md:text-5xl font-bold leading-tight">
+        <p class="text-white text-4xl md:text-5xl font-bold leading-tight">
           Explore the Hidden Corners of the World
-        </h1>
+        </p>
 
         <p class="text-white text-base md:text-xl">
           Find your perfect location for events, meetings, and adventures.

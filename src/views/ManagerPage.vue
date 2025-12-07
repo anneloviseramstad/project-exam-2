@@ -91,6 +91,7 @@ function formatDate(dateStr) {
     />
   </div>
   <div v-if="userStore.user" class="container mx-auto my-8 px-4 space-y-8">
+    <h1>Profile</h1>
     <div
       class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
     >
