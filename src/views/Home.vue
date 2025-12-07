@@ -7,7 +7,9 @@ import VenueList from "../components/venue/VenueList.vue";
 
 <template>
   <Header />
+  <h1 class="text-center mt-8">Find the perfect venue for your special day</h1>
   <FeaturedGrid />
   <Filterbar />
+  <h2 class="text-center">Discover Spaces for Every Occasion</h2>
   <VenueList />
 </template>

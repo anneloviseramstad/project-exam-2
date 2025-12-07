@@ -27,11 +27,7 @@ onMounted(fetchVenues);
 </script>
 
 <template>
-  <section class="py-8 px-4 max-w-6xl mx-auto mt-2">
-    <h2 class="text-3xl font-semibold mb-6 text-center lg:text-left">
-      Featured Venues
-    </h2>
-
+  <section class="py-4 px-4 max-w-6xl mx-auto mt-2">
     <div class="grid gap-4 grid-cols-2 md:grid-cols-4 auto-rows-[200px]">
       <div
         v-for="venue in venues"
