@@ -1,7 +1,3 @@
-<script>
-import { RouterLink } from "vue-router";
-</script>
-
 <template>
   <footer class="bg-gray-900 text-gray-300 text-base mt-12">
     <div class="max-w-7xl mx-auto px-6 py-12">
