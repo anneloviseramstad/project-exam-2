@@ -83,109 +83,111 @@ function formatDate(dateStr) {
 </script>
 
 <template>
-  <div v-if="userStore.user.banner?.url" class="w-full overflow-hidden">
-    <img
-      :src="userStore.user.banner.url"
-      :alt="userStore.user.banner.alt"
-      class="w-full h-40 md:h-60 object-cover"
-    />
-  </div>
-  <div v-if="userStore.user" class="container mx-auto my-8 px-4 space-y-8">
-    <h1>Profile</h1>
-    <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-    >
-      <div class="flex items-center gap-4">
-        <img
-          :src="userStore.user.avatar?.url"
-          :alt="userStore.user.avatar?.alt"
-          class="w-20 h-20 rounded-full object-cover border"
-        />
-        <div>
-          <h2 class="text-2xl font-semibold">{{ userStore.user.name }}</h2>
-          <p class="text-gray-600">{{ userStore.user.email }}</p>
-          <p class="text-gray-700">
-            {{ userStore.user.venueManager ? "Venue Manager" : "Customer" }}
-          </p>
+  <main>
+    <div v-if="userStore.user.banner?.url" class="w-full overflow-hidden">
+      <img
+        :src="userStore.user.banner.url"
+        :alt="userStore.user.banner.alt"
+        class="w-full h-40 md:h-60 object-cover"
+      />
+    </div>
+    <div v-if="userStore.user" class="container mx-auto my-8 px-4 space-y-8">
+      <h1>Profile</h1>
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      >
+        <div class="flex items-center gap-4">
+          <img
+            :src="userStore.user.avatar?.url"
+            :alt="userStore.user.avatar?.alt"
+            class="w-20 h-20 rounded-full object-cover border"
+          />
+          <div>
+            <h2 class="text-2xl font-semibold">{{ userStore.user.name }}</h2>
+            <p class="text-gray-600">{{ userStore.user.email }}</p>
+            <p class="text-gray-700">
+              {{ userStore.user.venueManager ? "Venue Manager" : "Customer" }}
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <button
+            @click="$router.push({ name: 'EditProfile' })"
+            class="px-4 py-2 bg-gray-900 rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
+          >
+            Edit Profile
+          </button>
+          <router-link
+            to="/manager-only/create"
+            class="px-4 py-2 bg-white border border-gray-400 text-black font-medium rounded-full hover:bg-gray-900 hover:text-white"
+          >
+            + Add New Venue
+          </router-link>
         </div>
       </div>
-      <div class="flex gap-4">
-        <button
-          @click="$router.push({ name: 'EditProfile' })"
-          class="px-4 py-2 bg-gray-900 rounded-full font-medium text-white rounded hover:bg-white hover:text-black hover:border"
-        >
-          Edit Profile
-        </button>
-        <router-link
-          to="/manager-only/create"
-          class="px-4 py-2 bg-white border border-gray-400 text-black font-medium rounded-full hover:bg-gray-900 hover:text-white"
-        >
-          + Add New Venue
-        </router-link>
+      <div v-if="userStore.user.bio" class="mt-4">
+        <h3 class="text-lg font-medium mb-1">Bio</h3>
+        <p>{{ userStore.user.bio }}</p>
       </div>
-    </div>
-    <div v-if="userStore.user.bio" class="mt-4">
-      <h3 class="text-lg font-medium mb-1">Bio</h3>
-      <p>{{ userStore.user.bio }}</p>
-    </div>
-    <div class="space-y-6 mt-6">
-      <h2 class="text-2xl font-medium my-4">My Venues</h2>
+      <div class="space-y-6 mt-6">
+        <h2 class="text-2xl font-medium my-4">My Venues</h2>
 
-      <div v-if="loading" class="text-gray-600">Loading venues...</div>
-      <div v-else-if="venues.length === 0" class="text-gray-600">
-        You have no venues yet.
+        <div v-if="loading" class="text-gray-600">Loading venues...</div>
+        <div v-else-if="venues.length === 0" class="text-gray-600">
+          You have no venues yet.
+        </div>
+        <ul v-else class="space-y-4">
+          <li
+            v-for="venue in venues"
+            :key="venue.id"
+            class="flex flex-col justify-between items-start border-l-3 border-gray-300 p-4"
+          >
+            <div class="flex flex-col gap-4">
+              <img
+                :src="venue.media?.[0]?.url || '/placeholder.jpg'"
+                :alt="venue.name"
+                class="w-28 h-20 object-cover rounded"
+              />
+              <div>
+                <p class="font-semibold text-lg">{{ venue.name }}</p>
+                <p class="text-gray-500">{{ venue.location?.city }}</p>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 pt-4 md:mt-0">
+              <router-link
+                :to="`/manager-only/edit/${venue.id}`"
+                class="text-black hover:text-yellow-800 font-semibold"
+              >
+                Edit
+              </router-link>
+              <button
+                class="text-red-600 hover:text-red-800 font-semibold text-left"
+                @click="deleteVenue(venue.id)"
+              >
+                Delete
+              </button>
+              <div v-if="venue.bookings?.length" class="mt-3 text-sm">
+                <h4 class="font-medium mb-1">Upcoming bookings:</h4>
+                <ul class="space-y-1">
+                  <li v-for="b in venue.bookings" :key="b.id">
+                    <span
+                      >{{ formatDate(b.dateFrom) }} →
+                      {{ formatDate(b.dateTo) }}</span
+                    >
+                    ({{ b.guests }} guests)
+                  </li>
+                </ul>
+              </div>
+              <div v-else class="mt-3 text-sm text-gray-500">
+                No bookings yet.
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
-      <ul v-else class="space-y-4">
-        <li
-          v-for="venue in venues"
-          :key="venue.id"
-          class="flex flex-col justify-between items-start border-l-3 border-gray-300 p-4"
-        >
-          <div class="flex flex-col gap-4">
-            <img
-              :src="venue.media?.[0]?.url || '/placeholder.jpg'"
-              :alt="venue.name"
-              class="w-28 h-20 object-cover rounded"
-            />
-            <div>
-              <p class="font-semibold text-lg">{{ venue.name }}</p>
-              <p class="text-gray-500">{{ venue.location?.city }}</p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-2 pt-4 md:mt-0">
-            <router-link
-              :to="`/manager-only/edit/${venue.id}`"
-              class="text-black hover:text-yellow-800 font-semibold"
-            >
-              Edit
-            </router-link>
-            <button
-              class="text-red-600 hover:text-red-800 font-semibold text-left"
-              @click="deleteVenue(venue.id)"
-            >
-              Delete
-            </button>
-            <div v-if="venue.bookings?.length" class="mt-3 text-sm">
-              <h4 class="font-medium mb-1">Upcoming bookings:</h4>
-              <ul class="space-y-1">
-                <li v-for="b in venue.bookings" :key="b.id">
-                  <span
-                    >{{ formatDate(b.dateFrom) }} →
-                    {{ formatDate(b.dateTo) }}</span
-                  >
-                  ({{ b.guests }} guests)
-                </li>
-              </ul>
-            </div>
-            <div v-else class="mt-3 text-sm text-gray-500">
-              No bookings yet.
-            </div>
-          </div>
-        </li>
-      </ul>
     </div>
-  </div>
-  <div v-else class="text-center py-10">
-    <p>Please log in to see your profile.</p>
-  </div>
+    <div v-else class="text-center py-10">
+      <p>Please log in to see your profile.</p>
+    </div>
+  </main>
 </template>

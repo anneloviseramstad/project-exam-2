@@ -69,46 +69,44 @@ async function handleEditProfile() {
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
-    <h1 class="text-2xl font-bold mb-6">Edit Profile</h1>
-
-    <form @submit.prevent="handleEditProfile" class="space-y-4">
-      <div>
-        <label>Bio</label>
-        <textarea
-          v-model="bio"
-          placeholder="Bio"
-          class="w-full p-2 border rounded"
-        ></textarea>
-      </div>
-
-      <div>
-        <label>Avatar Url</label>
-        <input
-          v-model="avatarUrl"
-          type="url"
-          placeholder="Avatar URL"
-          class="w-full p-2 border rounded"
-        />
-      </div>
-
-      <div>
-        <label>Banner Url</label>
-        <input
-          v-model="bannerUrl"
-          type="url"
-          placeholder="Banner URL"
-          class="w-full p-2 border rounded"
-        />
-      </div>
-
-      <button
-        type="submit"
-        :disabled="loading"
-        class="w-full px-6 py-2 bg-gray-900 text-white rounded-full"
-      >
-        {{ loading ? "Saving..." : "Save Changes" }}
-      </button>
-    </form>
-  </div>
+  <main>
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h1 class="text-2xl font-bold mb-6">Edit Profile</h1>
+      <form @submit.prevent="handleEditProfile" class="space-y-4">
+        <div>
+          <label>Bio</label>
+          <textarea
+            v-model="bio"
+            placeholder="Bio"
+            class="w-full p-2 border rounded"
+          ></textarea>
+        </div>
+        <div>
+          <label>Avatar Url</label>
+          <input
+            v-model="avatarUrl"
+            type="url"
+            placeholder="Avatar URL"
+            class="w-full p-2 border rounded"
+          />
+        </div>
+        <div>
+          <label>Banner Url</label>
+          <input
+            v-model="bannerUrl"
+            type="url"
+            placeholder="Banner URL"
+            class="w-full p-2 border rounded"
+          />
+        </div>
+        <button
+          type="submit"
+          :disabled="loading"
+          class="w-full px-6 py-2 bg-gray-900 text-white rounded-full"
+        >
+          {{ loading ? "Saving..." : "Save Changes" }}
+        </button>
+      </form>
+    </div>
+  </main>
 </template>

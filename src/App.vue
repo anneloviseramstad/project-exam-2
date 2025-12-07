@@ -7,12 +7,16 @@ import UiNotification from "./components/global/UiNotification.vue";
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <Navbar />
-    <Loader />
-    <UiNotification />
-    <div class="flex-1">
-      <router-view />
-    </div>
-    <Footer />
+    <header>
+      <Navbar />
+      <Loader />
+      <UiNotification />
+      <div class="flex-1">
+        <router-view />
+      </div>
+    </header>
   </div>
+  <footer>
+    <Footer />
+  </footer>
 </template>

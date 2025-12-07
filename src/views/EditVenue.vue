@@ -161,129 +161,133 @@ async function handleEditVenue() {
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-6">
-    <h1 class="text-2xl font-bold mb-4">Edit Venue</h1>
-    <form @submit.prevent="handleEditVenue" class="space-y-4">
-      <h2 class="font-semibold mt-4">Venue Details</h2>
-      <label for="name">Venue Name</label>
-      <input
-        v-model="name"
-        type="text"
-        placeholder="Venue Name"
-        class="w-full p-2 border rounded"
-      />
-      <p v-if="fieldErrors.name" class="text-red-500 text-sm">
-        {{ fieldErrors.name }}
-      </p>
-      <label for="description">Description</label>
-      <textarea
-        v-model="description"
-        placeholder="Description"
-        class="w-full p-2 border rounded"
-      ></textarea>
-      <p v-if="fieldErrors.description" class="text-red-500 text-sm">
-        {{ fieldErrors.description }}
-      </p>
-      <label for="price">Price / night</label>
-      <input
-        v-model.number="price"
-        type="number"
-        placeholder="Price per night"
-        class="w-full p-2 border rounded"
-      />
-      <p v-if="fieldErrors.price" class="text-red-500 text-sm">
-        {{ fieldErrors.price }}
-      </p>
-      <label for="maxGuests">Max Guests</label>
-      <input
-        v-model.number="maxGuests"
-        type="number"
-        placeholder="Max Guests"
-        class="w-full p-2 border rounded"
-      />
-      <p v-if="fieldErrors.maxGuests" class="text-red-500 text-sm">
-        {{ fieldErrors.maxGuests }}
-      </p>
-      <h2 class="font-semibold mt-4">Location</h2>
-      <label for="address">Address</label>
-      <input
-        v-model="location.address"
-        placeholder="Address"
-        class="w-full p-2 border rounded"
-      />
-      <label for="city">City</label>
-      <input
-        v-model="location.city"
-        placeholder="City"
-        class="w-full p-2 border rounded"
-      />
-      <label for="zipcode">ZIP Code</label>
-      <input
-        v-model="location.zip"
-        placeholder="ZIP"
-        class="w-full p-2 border rounded"
-      />
-      <label for="country">Country</label>
-      <input
-        v-model="location.country"
-        placeholder="Country"
-        class="w-full p-2 border rounded"
-      />
-      <label for="continent">Continent</label>
-      <input
-        v-model="location.continent"
-        placeholder="Continent"
-        class="w-full p-2 border rounded"
-      />
-      <h2 class="font-semibold mt-4">Facilities</h2>
-      <div class="flex flex-col">
-        <label><input type="checkbox" v-model="meta.wifi" /> WiFi</label>
-        <label><input type="checkbox" v-model="meta.parking" /> Parking</label>
-        <label
-          ><input type="checkbox" v-model="meta.breakfast" /> Breakfast</label
-        >
-        <label><input type="checkbox" v-model="meta.pets" /> Pets</label>
-      </div>
-      <h2 class="font-semibold mt-4">Media</h2>
-      <div v-for="(m, index) in media" :key="index" class="space-y-2">
-        <label for="imageUrl">Image Url</label>
+  <main>
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow space-y-6">
+      <h1 class="text-2xl font-bold mb-4">Edit Venue</h1>
+      <form @submit.prevent="handleEditVenue" class="space-y-4">
+        <h2 class="font-semibold mt-4">Venue Details</h2>
+        <label for="name">Venue Name</label>
         <input
-          v-model="m.url"
-          type="url"
-          placeholder="Image URL"
-          class="w-full p-2 border rounded"
-        />
-        <label for="imageAltText">Image Alt Text</label>
-        <input
-          v-model="m.alt"
+          v-model="name"
           type="text"
-          placeholder="Alt text"
+          placeholder="Venue Name"
           class="w-full p-2 border rounded"
         />
+        <p v-if="fieldErrors.name" class="text-red-500 text-sm">
+          {{ fieldErrors.name }}
+        </p>
+        <label for="description">Description</label>
+        <textarea
+          v-model="description"
+          placeholder="Description"
+          class="w-full p-2 border rounded"
+        ></textarea>
+        <p v-if="fieldErrors.description" class="text-red-500 text-sm">
+          {{ fieldErrors.description }}
+        </p>
+        <label for="price">Price / night</label>
+        <input
+          v-model.number="price"
+          type="number"
+          placeholder="Price per night"
+          class="w-full p-2 border rounded"
+        />
+        <p v-if="fieldErrors.price" class="text-red-500 text-sm">
+          {{ fieldErrors.price }}
+        </p>
+        <label for="maxGuests">Max Guests</label>
+        <input
+          v-model.number="maxGuests"
+          type="number"
+          placeholder="Max Guests"
+          class="w-full p-2 border rounded"
+        />
+        <p v-if="fieldErrors.maxGuests" class="text-red-500 text-sm">
+          {{ fieldErrors.maxGuests }}
+        </p>
+        <h2 class="font-semibold mt-4">Location</h2>
+        <label for="address">Address</label>
+        <input
+          v-model="location.address"
+          placeholder="Address"
+          class="w-full p-2 border rounded"
+        />
+        <label for="city">City</label>
+        <input
+          v-model="location.city"
+          placeholder="City"
+          class="w-full p-2 border rounded"
+        />
+        <label for="zipcode">ZIP Code</label>
+        <input
+          v-model="location.zip"
+          placeholder="ZIP"
+          class="w-full p-2 border rounded"
+        />
+        <label for="country">Country</label>
+        <input
+          v-model="location.country"
+          placeholder="Country"
+          class="w-full p-2 border rounded"
+        />
+        <label for="continent">Continent</label>
+        <input
+          v-model="location.continent"
+          placeholder="Continent"
+          class="w-full p-2 border rounded"
+        />
+        <h2 class="font-semibold mt-4">Facilities</h2>
+        <div class="flex flex-col">
+          <label><input type="checkbox" v-model="meta.wifi" /> WiFi</label>
+          <label
+            ><input type="checkbox" v-model="meta.parking" /> Parking</label
+          >
+          <label
+            ><input type="checkbox" v-model="meta.breakfast" /> Breakfast</label
+          >
+          <label><input type="checkbox" v-model="meta.pets" /> Pets</label>
+        </div>
+        <h2 class="font-semibold mt-4">Media</h2>
+        <div v-for="(m, index) in media" :key="index" class="space-y-2">
+          <label for="imageUrl">Image Url</label>
+          <input
+            v-model="m.url"
+            type="url"
+            placeholder="Image URL"
+            class="w-full p-2 border rounded"
+          />
+          <label for="imageAltText">Image Alt Text</label>
+          <input
+            v-model="m.alt"
+            type="text"
+            placeholder="Alt text"
+            class="w-full p-2 border rounded"
+          />
 
+          <button
+            type="button"
+            @click="removeMediaField(index)"
+            class="text-red-500"
+            v-if="media.length > 1"
+          >
+            Remove
+          </button>
+        </div>
         <button
           type="button"
-          @click="removeMediaField(index)"
-          class="text-red-500"
-          v-if="media.length > 1"
+          @click="addMediaField"
+          class="text-white bg-gray-900 rounded-full px-4 md:px-6 py-2"
         >
-          Remove
+          Add Image
         </button>
-      </div>
-      <button
-        type="button"
-        @click="addMediaField"
-        class="text-white bg-gray-900 rounded-full px-4 md:px-6 py-2"
-      >
-        Add Image
-      </button>
-      <button
-        type="submit"
-        :disabled="loading"
-        class="px-4 md:px-6 py-2 border rounded-full text-black rounded mt-4 mx-2"
-      >
-        {{ loading ? "Updating..." : "Update Venue" }}
-      </button>
-    </form>
-  </div>
+        <button
+          type="submit"
+          :disabled="loading"
+          class="px-4 md:px-6 py-2 border rounded-full text-black rounded mt-4 mx-2"
+        >
+          {{ loading ? "Updating..." : "Update Venue" }}
+        </button>
+      </form>
+    </div>
+  </main>
 </template>
