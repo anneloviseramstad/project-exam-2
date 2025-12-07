@@ -178,12 +178,14 @@ async function handleCreateVenue() {
         class="w-full p-2 border rounded"
       />
       <h2 class="font-semibold mt-4">Facilities</h2>
-      <label><input type="checkbox" v-model="meta.wifi" /> WiFi</label>
-      <label><input type="checkbox" v-model="meta.parking" /> Parking</label>
-      <label
-        ><input type="checkbox" v-model="meta.breakfast" /> Breakfast</label
-      >
-      <label><input type="checkbox" v-model="meta.pets" /> Pets</label>
+      <div class="flex flex-col">
+        <label><input type="checkbox" v-model="meta.wifi" /> WiFi</label>
+        <label><input type="checkbox" v-model="meta.parking" /> Parking</label>
+        <label
+          ><input type="checkbox" v-model="meta.breakfast" /> Breakfast</label
+        >
+        <label><input type="checkbox" v-model="meta.pets" /> Pets</label>
+      </div>
       <h2 class="font-semibold mt-4">Media</h2>
       <div v-for="(m, index) in media" :key="index" class="space-y-2">
         <input
