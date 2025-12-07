@@ -4,6 +4,13 @@ import { venueService } from "../../api/venueService";
 import { bookingService } from "../../api/bookingService";
 import VenueCard from "../venue/VenueCard.vue";
 
+/**
+ * Filterbar component that allows users to search for venues based on
+ * location, check-in/check-out dates, and number of guests. Fetches venues
+ * from the API, filters by availability and guest count, and displays results
+ * using VenueCard components. Handles loading state and API errors.
+ */
+
 const location = ref("");
 const checkIn = ref("");
 const checkOut = ref("");

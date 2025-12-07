@@ -5,6 +5,17 @@ import { venueService } from "../../api/venueService";
 import { useUiStore } from "../../store/ui";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/vue/24/outline";
 
+/**
+ * VenueList component that fetches and displays a paginated list of venues.
+ * Uses VenuesListView to render venue cards, and provides pagination controls
+ * to navigate between pages.
+ *
+ * Features:
+ * - Fetches venues from the API with a limit of 12 per page.
+ * - Tracks loading and error states.
+ * - Allows navigating to previous/next pages with buttons.
+ */
+
 const venues = ref([]);
 const loading = ref(true);
 const error = ref(null);
@@ -47,7 +58,7 @@ function goToPage(page) {
       :disabled="currentPage === 1"
       class="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full disabled:opacity-50"
     >
-      <ArrowLeftIcon class="w-5 h-5" />
+      <ArrowLeftIcon class="w-5 h-5" aria-hidden="true" />
     </button>
 
     <span class="flex items-center"
@@ -59,7 +70,7 @@ function goToPage(page) {
       :disabled="currentPage === totalPages"
       class="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full disabled:opacity-50"
     >
-      <ArrowRightIcon class="w-5 h-5" />
+      <ArrowRightIcon class="w-5 h-5" aria-hidden="true" />
     </button>
   </div>
 </template>

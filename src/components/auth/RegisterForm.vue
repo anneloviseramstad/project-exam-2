@@ -4,6 +4,14 @@ import { useUserStore } from "../../store/userStore";
 import { useUiStore } from "../../store/ui";
 import { useRouter } from "vue-router";
 
+/**
+ * Handles user registration by sending form data to the store,
+ * including optional avatar and banner URLs. Updates UI messages
+ * and redirects the user based on their role.
+ * @async
+ * @returns {Promise<void>}
+ */
+
 const userStore = useUserStore();
 const uiStore = useUiStore();
 const router = useRouter();

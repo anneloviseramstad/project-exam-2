@@ -4,6 +4,14 @@ import { useUserStore } from "../../store/userStore";
 import { useUiStore } from "../../store/ui";
 import { useRouter } from "vue-router";
 
+/**
+ * Handles the login process by sending email and password to the store,
+ * validating errors, updating UI messages, and redirecting the user based
+ * on their role.
+ * @async
+ * @returns {Promise<void>}
+ */
+
 const userStore = useUserStore();
 const uiStore = useUiStore();
 const router = useRouter();

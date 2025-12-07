@@ -10,6 +10,11 @@ import {
   CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
 
+/**
+ * Displays the logged-in user's profile, bio, account type, and bookings.
+ * Allows the user to edit their profile and cancel bookings.
+ */
+
 const userStore = useUserStore();
 const uiStore = useUiStore();
 const router = useRouter();
@@ -17,6 +22,11 @@ const router = useRouter();
 const bookings = ref([]);
 const loadingBookings = ref(false);
 
+/**
+ * Formats a date string into a readable format.
+ * @param {string} dateStr - Date string to format.
+ * @returns {string} Formatted date (e.g., 7 Dec 2025).
+ */
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("no-NO", {
     year: "numeric",
@@ -25,12 +35,22 @@ function formatDate(dateStr) {
   });
 }
 
+/**
+ * Calculates the number of nights between two dates.
+ * @param {string|Date} from - Start date.
+ * @param {string|Date} to - End date.
+ * @returns {number} Number of nights.
+ */
 function calculateNights(from, to) {
   const start = new Date(from);
   const end = new Date(to);
   return (end - start) / (1000 * 60 * 60 * 24);
 }
 
+/**
+ * Fetches the current user's bookings when the component is mounted.
+ * Redirects to login if the user is not logged in.
+ */
 onMounted(async () => {
   if (!userStore.isLoggedIn) return router.push("/auth?tab=login");
 
@@ -52,6 +72,10 @@ onMounted(async () => {
   }
 });
 
+/**
+ * Cancels a booking after confirmation and updates the bookings list.
+ * @param {string} bookingId - ID of the booking to cancel.
+ */
 async function cancelBooking(bookingId) {
   const confirmed = confirm("Are you sure you want to cancel your booking?");
   if (!confirmed) return;
@@ -158,18 +182,18 @@ async function cancelBooking(bookingId) {
               class="flex flex-col sm:flex-row sm:items-center gap-4 mt-3 md:mt-0"
             >
               <div class="flex items-center gap-1 text-gray-600">
-                <CalendarIcon class="w-5 h-5" />
+                <CalendarIcon class="w-5 h-5" aria-hidden="true" />
                 <span
                   >{{ formatDate(booking.dateFrom) }} →
                   {{ formatDate(booking.dateTo) }}</span
                 >
               </div>
               <div class="flex items-center gap-1 text-gray-600">
-                <UsersIcon class="w-5 h-5" />
+                <UsersIcon class="w-5 h-5" aria-hidden="true" />
                 <span>{{ booking.guests }} guests</span>
               </div>
               <div class="flex items-center gap-1 font-semibold">
-                <CurrencyDollarIcon class="w-5 h-5" />
+                <CurrencyDollarIcon class="w-5 h-5" aria-hidden="true" />
                 <span
                   >{{
                     calculateNights(booking.dateFrom, booking.dateTo) *

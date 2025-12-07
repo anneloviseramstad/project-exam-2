@@ -1,6 +1,16 @@
 <script setup>
 import VenueCard from "./VenueCard.vue";
 
+/**
+ * VenuesListView component that displays a list of venues in a grid layout.
+ * Handles three states: loading, error, and no results.
+ *
+ * Props:
+ * @prop {Array} venues - Array of venue objects to display.
+ * @prop {Boolean} loading - Indicates if the venues are being loaded.
+ * @prop {String|null} error - Error message to display if fetching fails.
+ */
+
 defineProps({
   venues: {
     type: Array,

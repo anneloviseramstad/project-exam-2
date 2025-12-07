@@ -4,6 +4,14 @@ import { useUserStore } from "../store/userStore";
 import { useUiStore } from "../store/ui";
 import { useRouter } from "vue-router";
 
+/**
+ * Allows a logged-in user to update their profile.
+ * - Pre-fills bio, avatar, and banner fields on mount.
+ * - Validates inputs and submits updates via userStore.
+ * - Shows success/error messages via uiStore.
+ * - Redirects users after successful update based on their role.
+ */
+
 const userStore = useUserStore();
 const uiStore = useUiStore();
 const router = useRouter();
@@ -13,6 +21,10 @@ const bannerUrl = ref("");
 const bio = ref("");
 const loading = ref(false);
 
+/**
+ * Initializes the form with the current user's profile on component mount.
+ * Redirects to login if user is not logged in.
+ */
 onMounted(() => {
   if (!userStore.user) {
     uiStore.setMessage("Please log in to edit your profile", "Error");
@@ -24,6 +36,11 @@ onMounted(() => {
   bio.value = userStore.user.bio || "";
 });
 
+/**
+ * Handles the profile update request.
+ * Validates input and updates the user profile via userStore.
+ * Redirects to appropriate page on success.
+ */
 async function handleEditProfile() {
   loading.value = true;
 

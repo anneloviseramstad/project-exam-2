@@ -5,7 +5,15 @@ import router from "./router";
 import { createPinia } from "pinia";
 import { useUserStore } from "./store/userStore";
 
-async function bootstrap() {
+/**
+ * Initializes the Vue application:
+ * - Creates the app and Pinia store.
+ * - Sets up the router.
+ * - Loads user data from local storage and fetches profile if needed.
+ * - Mounts the app to the DOM.
+ */
+
+async function initApp() {
   const app = createApp(App);
   const pinia = createPinia();
 
@@ -22,4 +30,4 @@ async function bootstrap() {
   app.mount("#app");
 }
 
-bootstrap();
+initApp();

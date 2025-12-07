@@ -5,6 +5,12 @@ import { useUiStore } from "../store/ui";
 import { useUserStore } from "../store/userStore";
 import { venueService } from "../api/venueService";
 
+/**
+ * Allows a venue manager edit an existing venue's details.
+ * Loads the venue, validates input, and updates it via venueService.
+ * Redirects unauthorized users.
+ */
+
 const uiStore = useUiStore();
 const userStore = useUserStore();
 const router = useRouter();
@@ -45,6 +51,10 @@ const fieldErrors = ref({
   maxGuests: null,
 });
 
+/**
+ * Loads venue data on component mount.
+ * Redirects user if not authorized to edit the venue.
+ */
 onMounted(async () => {
   loading.value = true;
 
@@ -84,14 +94,25 @@ onMounted(async () => {
   }
 });
 
+/**
+ * Adds a new empty media field.
+ */
 function addMediaField() {
   media.value.push({ url: "", alt: "" });
 }
 
+/**
+ * Removes a media field at the given index.
+ * @param {number} index - Index of the media field to remove.
+ */
 function removeMediaField(index) {
   media.value.splice(index, 1);
 }
 
+/**
+ * Handles venue update request.
+ * Validates input and updates the venue via venueService.
+ */
 async function handleEditVenue() {
   loading.value = true;
   fieldErrors.value = {

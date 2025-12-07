@@ -3,6 +3,24 @@ import { ref } from "vue";
 import LoginForm from "../components/auth/LoginForm.vue";
 import RegisterForm from "../components/auth/RegisterForm.vue";
 
+/**
+ * Auth page component for login and registration.
+ *
+ * State:
+ * - tab: Tracks the active tab, either "login" or "register".
+ *
+ * Methods:
+ * - switchTab(to): Switches the active tab to the specified value.
+ *
+ * Components:
+ * - LoginForm: The login form component.
+ * - RegisterForm: The registration form component.
+ *
+ * Template:
+ * - Displays tab buttons to toggle between login and register.
+ * - Conditionally renders LoginForm or RegisterForm based on the active tab.
+ */
+
 const tab = ref("login");
 
 function switchTab(to) {

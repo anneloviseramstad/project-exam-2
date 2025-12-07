@@ -19,6 +19,10 @@ const guests = ref(1);
 const loading = ref(false);
 const bookedRanges = ref([]);
 
+/**
+ * Fetches venue bookings when the component is mounted and
+ * converts them into date objects to track booked ranges.
+ */
 onMounted(async () => {
   const venue = await venueService.getVenueById(props.venueId, true);
 
@@ -30,6 +34,11 @@ onMounted(async () => {
     : [];
 });
 
+/**
+ * Checks if a given date is already booked for this venue.
+ * @param {string|Date} date - The date to check.
+ * @returns {boolean} True if the date is booked, false otherwise.
+ */
 function isDateBooked(date) {
   return bookedRanges.value.some((range) => {
     const d = new Date(date);
@@ -37,6 +46,12 @@ function isDateBooked(date) {
   });
 }
 
+/**
+ * Computes the total price for the booking based on the selected dates
+ * and venue price.
+ * @computed
+ * @returns {number} Total price in USD.
+ */
 const totalPrice = computed(() => {
   if (!dateFrom.value || !dateTo.value) return 0;
   const start = new Date(dateFrom.value);
@@ -45,6 +60,12 @@ const totalPrice = computed(() => {
   return days > 0 ? days * props.price : 0;
 });
 
+/**
+ * Submits a booking for the selected venue with the chosen dates and guest count.
+ * Validates login status and updates UI messages on success or error.
+ * @async
+ * @returns {Promise<void>}
+ */
 async function submitBooking() {
   if (!userStore.isLoggedIn) {
     uiStore.setMessage("You must be logged in to book a venue.", "Error");

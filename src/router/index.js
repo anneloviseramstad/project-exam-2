@@ -2,6 +2,21 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useUiStore } from "../store/ui";
 import { useUserStore } from "../store/userStore";
 
+/**
+ * Vue Router configuration for the Holidaze web app.
+ * Defines all app routes, including public and protected routes.
+ * Implements navigation guards to:
+ * - Fetch user profile if a token exists.
+ * - Restrict access to routes based on authentication and user role.
+ * - Display UI messages for unauthorized access.
+ *
+ * Routes:
+ * - Public: Home, Venues, VenuePage, Auth
+ * - Authenticated: Profile, EditProfile
+ * - Manager-only: ManagerPage, CreateVenue, EditVenue
+ * - Fallback: Redirect unknown paths to Home
+ */
+
 import Home from "../views/Home.vue";
 import VenueListPage from "../views/VenuesListPage.vue";
 import VenuePage from "../views/VenuePage.vue";

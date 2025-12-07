@@ -11,6 +11,11 @@ import {
   CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
 
+/**
+ * Displays the logged-in user's profile and their venues if they are a venue manager.
+ * Handles venue loading, deletion, and shows upcoming bookings for each venue.
+ */
+
 const userStore = useUserStore();
 const uiStore = useUiStore();
 const router = useRouter();
@@ -18,6 +23,11 @@ const router = useRouter();
 const venues = ref([]);
 const loading = ref(false);
 
+/**
+ * Loads all venues for the logged-in manager on component mount.
+ * Each venue includes its upcoming bookings.
+ * Redirects to Home if the user is not a logged-in manager.
+ */
 onMounted(async () => {
   if (!userStore.isLoggedIn || userStore.role !== "manager") {
     uiStore.setMessage("Access denied.", "Error");
@@ -41,6 +51,10 @@ onMounted(async () => {
   }
 });
 
+/**
+ * Deletes a venue after confirmation and removes it from the list.
+ * @param {string} id - ID of the venue to delete
+ */
 async function deleteVenue(id) {
   const confirmed = confirm("Are you sure you want to delete this venue?");
   if (!confirmed) return;
@@ -54,6 +68,11 @@ async function deleteVenue(id) {
   }
 }
 
+/**
+ * Formats a date string into a readable local format.
+ * @param {string} dateStr - The date string to format
+ * @returns {string} Formatted date
+ */
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("no-NO", {
     year: "numeric",

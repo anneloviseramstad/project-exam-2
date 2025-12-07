@@ -5,6 +5,12 @@ import { useUiStore } from "../store/ui";
 import { useUserStore } from "../store/userStore";
 import { venueService } from "../api/venueService";
 
+/**
+ * Form for venue managers to create a new venue.
+ * Tracks basic info, location, facilities, media, and validation.
+ * Handles form submission via venueService and shows messages with useUiStore.
+ */
+
 const uiStore = useUiStore();
 const userStore = useUserStore();
 const router = useRouter();

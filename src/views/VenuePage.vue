@@ -4,6 +4,13 @@ import { venueService } from "../api/venueService";
 import BookingForm from "../components/booking/BookingForm.vue";
 import { CheckIcon, XMarkIcon, StarIcon } from "@heroicons/vue/24/solid";
 
+/**
+ * VenueDetail.vue
+ *
+ * Displays detailed information for a single venue, including description,
+ * location, rating, facilities, and a booking form.
+ */
+
 const props = defineProps({
   id: String,
 });
@@ -35,7 +42,7 @@ const icons = { CheckIcon, XMarkIcon };
         <div class="flex flex-row items-center justify-between">
           <h1>{{ venue.name }}</h1>
           <div class="flex items-center gap-1 text-gray-600 text-sm px-3 py-1">
-            <StarIcon class="w-4 h-4 text-yellow-500" />
+            <StarIcon class="w-4 h-4 text-yellow-500" aria-hidden="true" />
             <span>{{ venue.rating }}</span>
           </div>
         </div>

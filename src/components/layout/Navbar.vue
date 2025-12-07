@@ -4,6 +4,15 @@ import { RouterLink, useRoute } from "vue-router";
 import { useUserStore } from "../../store/userStore";
 import { UserIcon } from "@heroicons/vue/24/outline";
 
+/**
+ * Navbar component that provides the main site navigation.
+ * Features:
+ * - Sticky header with hide-on-scroll behavior.
+ * - Responsive menu toggle for mobile screens.
+ * - Shows login button or user profile/logout options based on login state.
+ * - Highlights the active route for navigation links.
+ */
+
 const userStore = useUserStore();
 const route = useRoute();
 
@@ -101,7 +110,7 @@ const profileUrl = computed(() =>
         <template v-else>
           <li>
             <RouterLink :to="profileUrl">
-              <UserIcon class="w-6 h-6" />
+              <UserIcon class="w-6 h-6" aria-hidden="true" />
             </RouterLink>
           </li>
           <li>
@@ -203,7 +212,7 @@ const profileUrl = computed(() =>
         <template v-else>
           <li>
             <RouterLink :to="profileUrl" @click="closeMenu">
-              <UserIcon class="w-6 h-6" />
+              <UserIcon class="w-6 h-6" aria-hidden="true" />
             </RouterLink>
           </li>
           <li>

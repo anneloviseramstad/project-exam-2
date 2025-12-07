@@ -1,5 +1,22 @@
 import { defineStore } from "pinia";
 
+/**
+ * Pinia store for managing UI state and notifications.
+ *
+ * State:
+ * - navLoading: Boolean indicating if a page navigation is in progress.
+ * - message: Current UI message (string or null).
+ * - messageType: Type of the message ("Success", "Error", "Warning").
+ *
+ * Actions:
+ * - startNavigation(): Set navLoading to true.
+ * - endNavigation(): Set navLoading to false.
+ * - setError(err): Display an error message from an API or JS error.
+ * - setMessage(msg, type): Display a custom message of given type.
+ * - clearMessage(): Clear the current message.
+ * - parseApiError(err): Convert an API error response or JS error into a user-friendly message.
+ */
+
 export const useUiStore = defineStore("uiStore", {
   state: () => ({
     navLoading: false,

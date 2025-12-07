@@ -2,6 +2,27 @@ import { defineStore } from "pinia";
 import { authService } from "../api/authService";
 import router from "../router";
 
+/**
+ * Pinia store for managing user authentication and profile.
+ *
+ * State:
+ * - user: Object containing the logged-in user's profile information.
+ * - token: JWT token string from localStorage, or null if not logged in.
+ *
+ * Getters:
+ * - isLoggedIn: Boolean indicating whether the user is logged in.
+ * - username: Returns the user's name or null if not available.
+ * - role: Returns "manager" if the user is a venue manager, otherwise "customer".
+ *
+ * Actions:
+ * - login(credentials): Logs in a user with email and password, stores token, fetches profile.
+ * - register(payload): Registers a new user and automatically logs them in.
+ * - fetchProfile(): Fetches the latest user profile from the API.
+ * - updateProfile(payload): Updates user profile information via the API.
+ * - logout(): Clears user data and token, and redirects to home.
+ * - loadFromStorage(): Loads user and token from localStorage if available.
+ */
+
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,

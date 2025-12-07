@@ -1,5 +1,12 @@
 <script setup>
 import { useUiStore } from "../../store/ui";
+
+/**
+ * Notification message component that displays a temporary message
+ * from `uiStore.message`. The background color and icon depend
+ * on the `uiStore.messageType` ('Success', 'Warning', 'Error').
+ * Includes a fade transition for appearing and disappearing.
+ */
 const uiStore = useUiStore();
 </script>
 

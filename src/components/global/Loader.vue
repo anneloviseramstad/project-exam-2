@@ -1,6 +1,12 @@
 <script setup>
 import { useUiStore } from "../../store/ui";
 
+/**
+ * LoadingOverlay component that displays a full-screen spinner
+ * when `uiStore.navLoading` is true.
+ * Used to indicate that a navigation or API action is in progress.
+ */
+
 const uiStore = useUiStore();
 </script>
 

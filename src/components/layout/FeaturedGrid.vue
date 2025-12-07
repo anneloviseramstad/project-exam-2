@@ -5,6 +5,12 @@ import { ArrowUpRightIcon } from "@heroicons/vue/24/outline";
 
 const venues = ref([]);
 
+/**
+ * FeaturedGrid component that fetches and displays a list of featured venues.
+ * Shows only venues that have at least one media item. Clicking a venue navigates
+ * to its detail page. Limited to the first 4 venues on initial load.
+ */
+
 async function fetchVenues() {
   try {
     const response = await venueService.getAllVenues(1, 4);
@@ -48,6 +54,7 @@ onMounted(fetchVenues);
         </div>
         <ArrowUpRightIcon
           class="absolute bottom-3 right-3 w-6 h-6 text-white"
+          aria-hidden="true"
         />
       </div>
     </div>
