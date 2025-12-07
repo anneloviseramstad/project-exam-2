@@ -1,5 +1,7 @@
 ﻿# Holidaze - A Modern Accommodation Booking Platform
 
+![Readme Image](/src/assets/readmeimg.PNG)
+
 Holidaze is a modern accommodation booking platform built with **Vue 3** and **Tailwind CSS 4**, offering a smooth and intuitive experience for travelers and venue managers.
 
 The goal of this project is to deliver a high-quality, responsive front-end that demonstrates both strong technical and visual design capabilities.
@@ -48,7 +50,7 @@ It connects to the official Holidaze API to manage venues, bookings, and user pr
 ## Links
 
 Figma Design
-https://www.figma.com/design/CIZptA50V5ffryqXbxGIEW/Holidaze?node-id=4-446&t=Anp89nZOZ60OjxLh-1
+https://www.figma.com/design/CIZptA50V5ffryqXbxGIEW/Holidaze?node-id=4-446&t=qcye9a7BXf4BX3d2-1
 
 Project Kanban Board
 https://github.com/users/anneloviseramstad/projects/5
@@ -56,14 +58,7 @@ https://github.com/users/anneloviseramstad/projects/5
 Project Roadmap
 https://github.com/users/anneloviseramstad/projects/5/views/2
 
-
 ## Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/anneloviseramstad/project-exam-2.git
-```
 
 ### 1. Clone the repository
 
