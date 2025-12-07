@@ -11,11 +11,9 @@
         <p class="text-white text-4xl md:text-5xl font-bold leading-tight">
           Explore the Hidden Corners of the World
         </p>
-
         <p class="text-white text-base md:text-xl">
           Find your perfect location for events, meetings, and adventures.
         </p>
-
         <button class="btn my-8 w-fit" @click="$router.push('/venues')">
           GET STARTED
         </button>

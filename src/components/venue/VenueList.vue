@@ -51,7 +51,6 @@ function goToPage(page) {
 
 <template>
   <VenuesListView :venues="venues" :loading="loading" :error="error" />
-
   <div v-if="totalPages > 1" class="flex justify-center gap-2 mt-12">
     <button
       @click="goToPage(currentPage - 1)"
@@ -60,11 +59,9 @@ function goToPage(page) {
     >
       <ArrowLeftIcon class="w-5 h-5" aria-hidden="true" />
     </button>
-
     <span class="flex items-center"
       >Page {{ currentPage }} of {{ totalPages }}</span
     >
-
     <button
       @click="goToPage(currentPage + 1)"
       :disabled="currentPage === totalPages"

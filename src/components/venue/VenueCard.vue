@@ -32,7 +32,7 @@ function goToVenue() {
       class="card-img"
     />
     <div class="py-4">
-      <h3 class="font-medium text-md px-4">{{ venue.name }}</h3>
+      <p class="font-medium text-md px-4">{{ venue.name }}</p>
       <div class="flex items-center px-4 py-2">
         <MapPinIcon class="h-5 w-5 text-gray-500" aria-hidden="true" />
         <p class="text-gray-600 text-sm">{{ venue.location?.city }}</p>

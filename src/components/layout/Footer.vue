@@ -17,7 +17,7 @@
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center md:text-left"
         >
           <div>
-            <h4 class="text-white font-semibold mb-3">Quick Links</h4>
+            <p class="text-white font-semibold mb-3">Quick Links</p>
             <ul class="space-y-2">
               <li class="hover:text-white transition cursor-pointer">Home</li>
               <li class="hover:text-white transition cursor-pointer">Venues</li>
@@ -28,7 +28,7 @@
             </ul>
           </div>
           <div>
-            <h4 class="text-white font-semibold mb-3">Support</h4>
+            <p class="text-white font-semibold mb-3">Support</p>
             <ul class="space-y-2">
               <li class="hover:text-white transition cursor-pointer">
                 Help Center
@@ -39,7 +39,7 @@
             </ul>
           </div>
           <div>
-            <h4 class="text-white font-semibold mb-3">Legal Information</h4>
+            <p class="text-white font-semibold mb-3">Legal Information</p>
             <ul class="space-y-2">
               <li class="hover:text-white transition cursor-pointer">
                 Terms & Conditions

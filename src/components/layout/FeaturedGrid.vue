@@ -43,7 +43,7 @@ onMounted(fetchVenues);
           class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
         ></div>
         <div class="absolute bottom-3 left-3 text-white">
-          <h3 class="font-semibold">{{ venue.name }}</h3>
+          <p class="font-semibold">{{ venue.name }}</p>
           <p class="text-sm opacity-80">
             {{ venue.location.city }}, {{ venue.location.country }}
           </p>
