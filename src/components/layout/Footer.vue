@@ -1,3 +1,7 @@
+<script>
+import { RouterLink } from "vue-router";
+</script>
+
 <template>
   <footer class="bg-gray-900 text-gray-300 text-base mt-12">
     <div class="max-w-7xl mx-auto px-6 py-12">
@@ -19,11 +23,17 @@
           <div>
             <p class="text-white font-semibold mb-3">Quick Links</p>
             <ul class="space-y-2">
-              <li class="hover:text-white transition cursor-pointer">Home</li>
-              <li class="hover:text-white transition cursor-pointer">Venues</li>
-              <li class="hover:text-white transition cursor-pointer">About</li>
               <li class="hover:text-white transition cursor-pointer">
-                Contact Us
+                <RouterLink to="/"> Home </RouterLink>
+              </li>
+              <li class="hover:text-white transition cursor-pointer">
+                <RouterLink to="/venues">Venues </RouterLink>
+              </li>
+              <li class="hover:text-white transition cursor-pointer">
+                <RouterLink to="/about">About</RouterLink>
+              </li>
+              <li class="hover:text-white transition cursor-pointer">
+                <RouterLink to="/contact"> Contact Us </RouterLink>
               </li>
             </ul>
           </div>
